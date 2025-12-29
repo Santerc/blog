@@ -1,7 +1,7 @@
 baseURL = '/'
 languageCode = 'zh-cn'
 title = 'SantercのBlog'
-theme = 'digi-bandori'
+theme = 'bandori-Rose&Monica'
 
 [params]
   description = "杂七杂八，各取所需."
