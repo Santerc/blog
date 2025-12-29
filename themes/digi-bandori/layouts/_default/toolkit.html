@@ -1,0 +1,28 @@
+{{ define "main" }}
+<div class="toolkit-container fade-up">
+    <div class="post-item" style="text-align: center; margin-bottom: 2rem;">
+        <h1 class="post-title"># SYSTEM_TOOLKIT</h1>
+        <p class="summary">{{ .Params.description | default "Collection of utility programs and links." }}</p>
+    </div>
+
+    <div class="tool-grid">
+        <!-- 读取 data/tools.yml -->
+        {{ if .Site.Data.tools }}
+            {{ range .Site.Data.tools }}
+            <a href="{{ .url }}" {{ if eq .type "external" }}target="_blank"{{ end }} class="tool-card glass-panel">
+                <div class="tool-icon">{{ .icon }}</div>
+                <div class="tool-info">
+                    <h3 class="tool-name">{{ .name }}</h3>
+                    <p class="tool-desc">{{ .desc }}</p>
+                </div>
+                <div class="tool-arrow">↗</div>
+            </a>
+            {{ end }}
+        {{ else }}
+            <div style="text-align:center; width:100%; color:var(--text-muted);">
+                // WARN: data/tools.yml NOT FOUND OR EMPTY
+            </div>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

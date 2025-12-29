@@ -1,0 +1,93 @@
+<!-- 搜索模块 (Search Widget 3.0 - Enter Trigger) -->
+<div class="search-widget" id="search-widget">
+    <div class="search-container">
+        <!-- 左侧：搜索图标 -->
+        <span class="search-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+        </span>
+        
+        <!-- 中间：输入框 -->
+        <!-- 注意：去掉了 autocomplete 和之前的事件监听 -->
+        <input type="text" id="global-search-input" class="search-input" placeholder="CMD: ENTER_TO_SEARCH..." autocomplete="off">
+        
+    </div>
+    <!-- ⚠️ 注意：这里不再需要下拉结果容器了，结果在中间显示 -->
+</div>
+
+
+
+<!-- 用户信息模块 (已更新) -->
+<div class="widget">
+    <div class="widget-title">// USER_PROFILE</div>
+    <div style="text-align: center; margin-bottom: 1rem;">
+        
+        <!-- 头像逻辑：配置了图片则显示图片，否则显示默认的像素怪兽 -->
+        <div style="
+            width: 100px; 
+            height: 100px; 
+            margin: 0 auto 15px; 
+            border-radius: 50%; 
+            border: 2px solid var(--primary); 
+            padding: 4px;
+            background: var(--bg-body);
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            overflow: hidden;
+        ">
+            {{ if .Site.Params.author.avatar }}
+                <img src="{{ .Site.Params.author.avatar }}" alt="avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+            {{ else }}
+                <span style="font-size: 3rem;">👾</span>
+            {{ end }}
+        </div>
+
+        <!-- 读取用户名 -->
+        <h3 style="font-size: 1.2rem; color: var(--text-main); font-family: 'JetBrains Mono', monospace;">
+            {{ .Site.Params.author.name | default "Admin" }}
+        </h3>
+        
+        <!-- 读取简介 -->
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 5px;">
+            {{ .Site.Params.author.bio | default "No bio yet." }}
+        </p>
+    </div>
+</div>
+
+<!-- 导航菜单 -->
+<div class="widget">
+    <div class="widget-title">// NAVIGATION</div>
+    <ul class="menu-list">
+        <li>
+            <a href="/">
+                HOME <span>(00)</span>
+            </a>
+        </li>
+        <li>
+            <a href="/posts/">
+                ARCHIVES <span>(01)</span>
+            </a>
+        </li>
+        <li>
+            <a href="/tags/">
+                TAGS <span>(02)</span>
+            </a>
+        </li>
+        <li>
+            <a href="/about/">
+                ABOUT <span>(03)</span>
+            </a>
+        </li>
+        <li>
+            <a href="/tools/">
+                TOOLKIT <span>(04)</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+{{ $searchJS := resources.Get "js/search.js" | minify }}
+<script src="{{ $searchJS.Permalink }}"></script>

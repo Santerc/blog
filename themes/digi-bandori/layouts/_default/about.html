@@ -1,0 +1,64 @@
+{{ define "main" }}
+<!-- 这里的 styles 确保即使 CSS 没刷新也能由基本的布局 -->
+<div class="about-container fade-up" style="max-width: 1000px; margin: 0 auto;">
+    
+    <!-- 顶部：个人核心信息卡 -->
+    <div class="about-header glass-panel" style="display: flex; align-items: center; gap: 2rem; padding: 2.5rem; margin-bottom: 2rem; border-radius: 16px;">
+        <div class="about-avatar-wrapper">
+            <img src="{{ .Params.avatar | default .Site.Params.home.avatar }}" alt="avatar" class="about-avatar" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover;">
+        </div>
+        <div class="about-info">
+            <h1 class="about-name" style="font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem;">{{ .Params.nickname }}</h1>
+            <p class="about-role" style="font-family: 'JetBrains Mono'; color: var(--primary); font-weight: bold;">// {{ .Params.role }}</p>
+            <p class="about-loc" style="color: var(--text-muted);">📍 {{ .Params.location }}</p>
+        </div>
+    </div>
+
+    <!-- 中间：两栏布局 -->
+    <div class="about-grid" style="display: grid; grid-template-columns: 2fr 1.2fr; gap: 25px;">
+        
+        <!-- 左侧：自我介绍正文 -->
+        <div class="about-bio glass-panel" style="padding: 2rem; border-radius: 12px;">
+            <div class="panel-title" style="font-family: 'JetBrains Mono'; font-weight: bold; color: var(--text-muted); margin-bottom: 1rem; border-bottom: 1px dashed var(--border); padding-bottom: 5px;">// BIO_DATA</div>
+            <div class="post-content">
+                {{ .Content }}
+            </div>
+        </div>
+
+        <!-- 右侧：技能与装备 -->
+        <div class="about-stats" style="display: flex; flex-direction: column; gap: 20px;">
+            <!-- 1. 技能条 -->
+            {{ if .Params.skills }}
+            <div class="glass-panel stat-box" style="padding: 1.5rem; border-radius: 12px;">
+                <div class="panel-title" style="font-family: 'JetBrains Mono'; font-weight: bold; color: var(--text-muted); margin-bottom: 1rem; border-bottom: 1px dashed var(--border); padding-bottom: 5px;">// SKILL_TREE</div>
+                <div class="skill-list" style="display: flex; flex-direction: column; gap: 15px;">
+                    {{ range .Params.skills }}
+                    <div class="skill-item" style="width: 100%;">
+                        <div class="skill-info" style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px; font-family: 'JetBrains Mono';">
+                            <span>{{ .name }}</span>
+                            <span>{{ .percent }}%</span>
+                        </div>
+                        <div class="progress-bg" style="width: 100%; height: 8px; background: rgba(100,100,100,0.1); border-radius: 4px; overflow: hidden;">
+                            <div class="progress-bar" style="height: 100%; width: {{ .percent }}%; background: var(--primary); border-radius: 4px;"></div>
+                        </div>
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+            {{ end }}
+
+            <!-- 2. 技术栈 -->
+            {{ if .Params.stack }}
+            <div class="glass-panel stat-box" style="padding: 1.5rem; border-radius: 12px;">
+                <div class="panel-title" style="font-family: 'JetBrains Mono'; font-weight: bold; color: var(--text-muted); margin-bottom: 1rem; border-bottom: 1px dashed var(--border); padding-bottom: 5px;">// EQUIPMENT</div>
+                <div class="tag-cloud">
+                    {{ range .Params.stack }}
+                    <span class="tech-tag">{{ . }}</span>
+                    {{ end }}
+                </div>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</div>
+{{ end }}

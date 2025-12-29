@@ -1,0 +1,23 @@
+{{ define "main" }}
+<div style="text-align: center; padding: 5rem 0;">
+    <h1 style="font-size: 6rem; font-family: 'JetBrains Mono', monospace; color: var(--primary); line-height: 1; margin-bottom: 1rem;">404</h1>
+    <h2 style="font-size: 1.5rem; margin-bottom: 2rem; color: var(--text-main);">ERROR: DATA_NOT_FOUND</h2>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">
+        The requested resource could not be located in the memory sector.<br>
+        Please return to the main sequence.
+    </p>
+    <a href="{{ .Site.Home.Permalink }}" style="
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: var(--primary);
+        color: #fff;
+        text-decoration: none;
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: bold;
+        border-radius: 4px;
+        transition: opacity 0.3s;
+    ">
+        &lt; RETURN_HOME /&gt;
+    </a>
+</div>
+{{ end }}

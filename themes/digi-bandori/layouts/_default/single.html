@@ -1,0 +1,18 @@
+{{ define "main" }}
+<article class="post-content">
+    <header style="margin-bottom: 3rem; border-bottom: 1px dashed var(--border); padding-bottom: 2rem;">
+        <h1 style="font-size: 2.2rem; margin-bottom: 0.5rem;">{{ .Title }}</h1>
+        <div class="post-meta">
+            <span>By {{ .Params.author | default .Site.Params.author.name }}</span>
+            <span style="margin: 0 10px;">|</span>
+            <span>{{ .Date.Format "Jan 02, 2006" }}</span>
+            <span style="margin: 0 10px;">|</span>
+            <span style="color: var(--accent);">#{{ index .Params.tags 0 | default "Log" }}</span>
+        </div>
+    </header>
+    
+    <div class="content">
+        {{ .Content }}
+    </div>
+</article>
+{{ end }}

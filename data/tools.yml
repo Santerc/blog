@@ -1,0 +1,17 @@
+- name: "Can I Use"
+  desc: "前端兼容性查询"
+  url: "https://caniuse.com"
+  icon: "🌐" # 可以是 Emoji 也可以是 SVG 路径
+  type: "external"
+
+- name: "Color Hunt"
+  desc: "配色灵感库"
+  url: "https://colorhunt.co"
+  icon: "🎨"
+  type: "external"
+
+- name: "My Calculator"
+  desc: "自制汇率计算器"
+  url: "/tools/calculator"  # 指向内部工具
+  icon: "🧮"
+  type: "internal"

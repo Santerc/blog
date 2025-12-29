@@ -1,0 +1,53 @@
+{{ define "main" }}
+
+<!-- 页面标题 (如果是标签页或分类页，显示标题) -->
+{{ if not .IsHome }}
+<div class="post-item" style="text-align: center; margin-bottom: 2rem;">
+    <h1 class="post-title" style="margin: 0;"># {{ .Title | upper }}</h1>
+</div>
+{{ end }}
+
+<!-- 文章列表循环 -->
+{{ range .Paginator.Pages }}
+<article class="post-item">
+    <span class="post-meta">
+        {{ .Date.Format "2006-01-02" }}
+        {{ with .Params.tags }} // [ {{ range . }}{{ . }} {{ end }}] {{ end }}
+    </span>
+    
+    <h2 class="post-title">
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
+    </h2>
+
+    {{ if .Params.summary }}
+    <p class="summary" style="margin-top: 1rem;">
+        {{ .Params.summary }}
+    </p>
+    {{ end }}
+    
+    <div style="margin-top: 1rem;">
+        <a href="{{ .Permalink }}" style="font-family: 'JetBrains Mono'; font-size: 0.85rem;">
+            &gt; READ_LOG
+        </a>
+    </div>
+</article>
+{{ end }}
+
+<!-- 分页器 -->
+{{ if gt .Paginator.TotalPages 1 }}
+<div class="pagination">
+    {{ if .Paginator.HasPrev }}
+    <a href="{{ .Paginator.Prev.URL }}">&lt; PREV</a>
+    {{ end }}
+    
+    <span style="padding: 8px 16px; color: var(--text-muted);">
+        PAGE {{ .Paginator.PageNumber }} / {{ .Paginator.TotalPages }}
+    </span>
+    
+    {{ if .Paginator.HasNext }}
+    <a href="{{ .Paginator.Next.URL }}">NEXT &gt;</a>
+    {{ end }}
+</div>
+{{ end }}
+
+{{ end }}

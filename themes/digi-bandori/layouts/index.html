@@ -1,0 +1,101 @@
+{{ define "main" }}
+
+<!-- 1. HERO SECTION (顶部头图区域) -->
+<section class="home-hero">
+    <!-- 背景图 -->
+    <div class="hero-bg" style="background-image: url('{{ .Site.Params.home.banner }}');"></div>
+    
+    <!-- 玻璃磨砂欢迎卡片 -->
+    <div class="hero-content glass-panel">
+        <h1 class="hero-title">WELCOME TO <span style="color: var(--primary);">{{ .Site.Title }}</span>_</h1>
+        <p class="hero-subtitle">// {{ .Site.Params.description | default "SYSTEM READY." }}</p>
+    </div>
+</section>
+
+<!-- 2. DASHBOARD WIDGETS (仪表盘小工具) -->
+<section class="dashboard-grid">
+    <!-- 个人信息 (Profile) -->
+    <div class="dash-card profile-card">
+        <div class="profile-inner">
+            <img src="{{ .Site.Params.home.avatar }}" alt="Avatar" class="avatar">
+            <div class="profile-text">
+                <h3 class="nickname">{{ .Site.Params.home.nickname }}</h3>
+                <p class="bio">{{ .Site.Params.home.bio }}</p>
+            </div>
+        </div>
+        <div class="profile-social">
+            {{ with .Site.Params.social.github }}
+            <a href="{{ . }}" target="_blank" title="GitHub">Github</a>
+            {{ end }}
+            {{ with .Site.Params.social.bilibili }}
+            <a href="{{ . }}" target="_blank" title="Bilibili">Bilibili</a>
+            {{ end }}
+            <a href="/index.xml" title="RSS">RSS</a>
+        </div>
+    </div>
+
+    <!-- 系统状态 (Status) -->
+    <div class="dash-card status-card">
+        <div class="card-label">// SYSTEM_STATUS</div>
+        <div class="status-display">
+            <div class="status-indicator">
+                <span class="pulse-dot"></span>
+                <span>{{ .Site.Params.home.status }}</span>
+            </div>
+            <div class="uptime">RUNNING: {{ now.Format "15:04:05" }}</div>
+        </div>
+        <div class="decor-progress">
+            <div class="bar" style="width: 75%;"></div>
+        </div>
+    </div>
+
+    <!-- 数据统计 (Stats) -->
+    <div class="dash-card stats-card">
+        <div class="card-label">// DATABASE_METRICS</div>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="num">{{ len .Site.RegularPages }}</span>
+                <span class="label">LOGS</span>
+            </div>
+            <div class="stat-item">
+                <span class="num">{{ len .Site.Taxonomies.tags }}</span>
+                <span class="label">TAGS</span>
+            </div>
+            <div class="stat-item">
+                <span class="num">{{ len .Site.Taxonomies.categories }}</span>
+                <span class="label">CATS</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 3. LATEST LOGS -->
+<section class="latest-logs">
+    <div class="section-header">
+        <h2 class="section-title">&gt; LATEST_LOGS</h2>
+        <a href="/posts/" class="view-all">VIEW_ALL_ARCHIVES -></a>
+    </div>
+
+    <div class="post-list">
+        {{ range first 5 .Site.RegularPages }}
+        <article class="post-item home-post-item">
+            <div class="post-meta-row">
+                <span class="date">{{ .Date.Format "2006-01-02" }}</span>
+                {{ with .Params.categories }}
+                <span class="category">[{{ index . 0 | upper }}]</span>
+                {{ end }}
+            </div>
+            
+            <h3 class="post-title">
+                <a href="{{ .Permalink }}">{{ .Title }}</a>
+            </h3>
+
+            {{ if .Params.summary }}
+            <p class="summary">{{ .Params.summary }}</p>
+            {{ end }}
+        </article>
+        {{ end }}
+    </div>
+</section>
+
+{{ end }}

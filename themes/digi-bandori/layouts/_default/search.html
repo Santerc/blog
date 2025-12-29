@@ -1,0 +1,17 @@
+{{ define "main" }}
+<section class="search-page">
+    <!-- 搜索头部状态 -->
+    <div class="search-header post-item">
+        <h1 class="post-title" style="margin-bottom: 0.5rem;">
+            SEARCH_RESULT: <span id="search-keyword" style="color: var(--primary);">...</span>
+        </h1>
+        <p class="post-meta">
+            STATUS: <span id="search-status">WAITING_INPUT...</span>
+        </p>
+    </div>
+
+    <!-- 搜索结果挂载点 -->
+    <div id="search-result-wrapper">
+    </div>
+</section>
+{{ end }}

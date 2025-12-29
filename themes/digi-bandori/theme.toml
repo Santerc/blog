@@ -1,0 +1,10 @@
+name = "Bandori"
+license = "MIT"
+description = "A minimalist, digital-style Hugo theme with Morfonica & Roselia color schemes."
+homepage = "https://github.com/yourname/digi-bandori"
+tags = ["minimal", "blog", "digital", "dark-mode", "Bandori", "Morfonica", "Roselia"]
+features = ["dark-mode", "responsive"]
+min_version = "0.80.0"
+
+[author]
+  name = "Santerc"

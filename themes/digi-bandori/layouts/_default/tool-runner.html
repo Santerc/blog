@@ -1,0 +1,35 @@
+{{ define "main" }}
+<div class="tool-runner-container fade-up" style="max-width: 800px; margin: 0 auto;">
+    <!-- 神奇想法，在md中写三剑客并运行 -->
+    <!-- 顶部导航 -->
+    <div class="tool-header glass-panel" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; padding:1.5rem;">
+        <a href="/tools/" class="back-link" style="font-family:'JetBrains Mono';">&lt; BACK_TO_TOOLKIT</a>
+        <h1 class="tool-title" style="margin:0; font-size:1.5rem;">{{ .Title }}</h1>
+    </div>
+
+    <!-- 核心运行区 -->
+    <div class="tool-stage glass-panel" style="padding:2rem; margin-bottom:2rem; min-height:200px; position:relative;">
+        
+        <!-- 1. 注入 CSS -->
+        <style>
+            {{ .Params.custom_css | safeCSS }}
+        </style>
+
+        <!-- 2. 注入 HTML -->
+        <div id="app-root">
+            {{ .Params.custom_html | safeHTML }}
+        </div>
+
+        <!-- 3. 注入 JS  -->
+        <script>
+            {{ .Params.custom_js | safeJS }}
+        </script>
+    </div>
+
+    <!-- 说明部分 -->
+    <div class="tool-docs post-content glass-panel" style="padding: 2rem;">
+        <div class="panel-title" style="border-bottom:1px dashed var(--border); margin-bottom:1rem; padding-bottom:5px; color:var(--text-muted); font-family:'JetBrains Mono';">// MANUAL</div>
+        {{ .Content }}
+    </div>
+</div>
+{{ end }}

@@ -1,0 +1,31 @@
+baseURL = '/'
+languageCode = 'zh-cn'
+title = 'SantercのBlog'
+theme = 'digi-bandori'
+
+[params]
+  description = "杂七杂八，各取所需."
+[outputs]
+  home = ["HTML", "JSON"]
+
+
+[params.author]
+  name = "Santerc"                         # 用户名
+  bio = "Thinking Doing To Theory"  # 个人简介 (显示在左侧栏)
+  avatar = "https://avatars.githubusercontent.com/u/131346045?v=4"         # 头像路径或者完整的 URL
+  
+[params.social]
+  bilibili = "https://space.bilibili.com/543213068"  # 你的 B 站主页
+  github = "https://github.com/santerc"          # 你的 GitHub 主页
+
+[params.home]
+        # 头图路径
+        banner = "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop" 
+        # 头像路径
+        avatar = "https://avatars.githubusercontent.com/u/131346045?v=4"
+        # 昵称
+        nickname = "Santerc"
+        # 个人简介/签名
+        bio = "VibeCoding重度依赖 / 北理工大四学生 / 萝符号"
+        # 当前状态 (显示在下面胶囊里)
+        status = "CODING_MODE"
