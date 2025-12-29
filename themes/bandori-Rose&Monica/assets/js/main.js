@@ -19,49 +19,121 @@ document.addEventListener('DOMContentLoaded', () => {
                 html.setAttribute('data-theme', 'dark');
                 localStorage.setItem('theme', 'dark');
             }
+            // CSS 会自动处理滑块移动和图标变化，无需 JS 操作 DOM
         });
     }
 
     // ===============================================
-    // 2. TOC ScrollSpy (文章目录)
+    // 2. TOC ScrollSpy (文章目录滚动监听)
     // ===============================================
     const tocLinks = document.querySelectorAll('#TableOfContents a');
     const sections = [];
 
+    // 收集目录中对应的所有章节元素
     tocLinks.forEach(link => {
         const href = link.getAttribute('href');
         if (href && href.startsWith('#')) {
             const id = href.slice(1);
-            const section = document.getElementById(id);
-            if (section) {
-                sections.push(section);
+            // 需要转义特殊字符，防止 ID 中包含中文或符号报错
+            try {
+                const section = document.getElementById(decodeURIComponent(id));
+                if (section) {
+                    sections.push(section);
+                }
+            } catch (e) {
+                console.warn("Invalid TOC ID:", id);
             }
         }
     });
 
     if (sections.length > 0) {
-        // 使用 scroll 监听
-        window.addEventListener('scroll', () => {
+        const onScroll = () => {
             let current = '';
+            const scrollPos = window.scrollY;
             
             sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                // -150 抵消头部高度 (80px) 和一些视觉余量
-                if (window.scrollY >= sectionTop - 150) {
+                // -150 是为了抵消头部高度 (80px) 和一些视觉余量
+                if (scrollPos >= section.offsetTop - 150) {
                     current = section.getAttribute('id');
                 }
             });
 
-            // 更新右侧目录高亮
             tocLinks.forEach(link => {
                 link.classList.remove('active');
-                // 获取锚点部分
                 const href = link.getAttribute('href');
-                // 如果当前滚动到了某个章节，且链接指向该章节
                 if (current && href.includes(current)) {
                     link.classList.add('active');
                 }
             });
+        };
+
+        // 使用 Passive 监听提升滚动性能
+        window.addEventListener('scroll', onScroll, { passive: true });
+    }
+
+    // ===============================================
+    // 3. Mobile Sidebar Toggles (移动端抽屉交互)
+    // ===============================================
+    const menuBtn = document.getElementById('mobile-menu-btn');     // 左侧菜单按钮
+    const widgetBtn = document.getElementById('mobile-widget-btn'); // 右侧小组件按钮
+    const leftSidebar = document.querySelector('.sidebar-left');
+    const rightSidebar = document.querySelector('.sidebar-right');
+    const backdrop = document.getElementById('mobile-backdrop');
+
+    // 关闭所有侧边栏
+    function closeAllSidebars() {
+        if(leftSidebar) leftSidebar.classList.remove('active');
+        if(rightSidebar) rightSidebar.classList.remove('active');
+        if(backdrop) backdrop.classList.remove('active');
+        document.body.style.overflow = ''; // 恢复背景滚动
+    }
+
+    // 打开指定侧边栏
+    function openSidebar(sidebar) {
+        // 先关闭其他的，互斥显示
+        if(leftSidebar && leftSidebar !== sidebar) leftSidebar.classList.remove('active');
+        if(rightSidebar && rightSidebar !== sidebar) rightSidebar.classList.remove('active');
+        
+        if(sidebar) {
+            sidebar.classList.add('active');
+            if(backdrop) backdrop.classList.add('active');
+            document.body.style.overflow = 'hidden'; // 锁定背景滚动
+        }
+    }
+
+    // 左侧菜单点击
+    if (menuBtn && leftSidebar) {
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (leftSidebar.classList.contains('active')) {
+                closeAllSidebars();
+            } else {
+                openSidebar(leftSidebar);
+            }
         });
     }
+
+    // 右侧小组件点击
+    if (widgetBtn && rightSidebar) {
+        widgetBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (rightSidebar.classList.contains('active')) {
+                closeAllSidebars();
+            } else {
+                openSidebar(rightSidebar);
+            }
+        });
+    }
+
+    // 点击遮罩层关闭
+    if (backdrop) {
+        backdrop.addEventListener('click', closeAllSidebars);
+    }
+
+    // 监听窗口大小变化（防止从移动端切回桌面端时样式残留）
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 1200) {
+            closeAllSidebars();
+        }
+    });
 });
