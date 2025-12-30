@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>BIT on SantercのBlog</title>
-    <link>//localhost:1313/tags/bit/</link>
+    <link>http://localhost:1313/blog/tags/bit/</link>
     <description>Recent content in BIT on SantercのBlog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <lastBuildDate>Mon, 29 Dec 2025 17:16:56 +0800</lastBuildDate>
-    <atom:link href="//localhost:1313/tags/bit/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/blog/tags/bit/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ttt</title>
-      <link>//localhost:1313/posts/ttt/</link>
+      <link>http://localhost:1313/blog/posts/ttt/</link>
       <pubDate>Mon, 29 Dec 2025 17:16:56 +0800</pubDate>
-      <guid>//localhost:1313/posts/ttt/</guid>
+      <guid>http://localhost:1313/blog/posts/ttt/</guid>
       <description>&lt;h1 id=&#34;tittle1&#34;&gt;Tittle1&lt;/h1&gt;&#xA;&lt;h2 id=&#34;11&#34;&gt;1.1&lt;/h2&gt;&#xA;&lt;p&gt;Hello Hugo.&lt;/p&gt;&#xA;&lt;h1 id=&#34;tittle2&#34;&gt;Tittle2&lt;/h1&gt;&#xA;&lt;h2 id=&#34;21&#34;&gt;2.1&lt;/h2&gt;&#xA;&lt;p&gt;Hello Hugo.&lt;/p&gt;</description>
     </item>
   </channel>

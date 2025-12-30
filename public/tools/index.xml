@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>TOOLKIT on SantercのBlog</title>
-    <link>//localhost:1313/tools/</link>
+    <link>http://localhost:1313/blog/tools/</link>
     <description>Recent content in TOOLKIT on SantercのBlog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <atom:link href="//localhost:1313/tools/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/blog/tools/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>简易计数器</title>
-      <link>//localhost:1313/tools/calculator/</link>
+      <link>http://localhost:1313/blog/tools/calculator/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>//localhost:1313/tools/calculator/</guid>
+      <guid>http://localhost:1313/blog/tools/calculator/</guid>
       <description>&lt;h3 id=&#34;使用说明&#34;&gt;使用说明&lt;/h3&gt;&#xA;&lt;p&gt;这是一个测试用的计数器，完全运行在 Hugo 页面内，旨在教会读者如何使用本模板在MD中编写HTML。&lt;/p&gt;</description>
     </item>
   </channel>
