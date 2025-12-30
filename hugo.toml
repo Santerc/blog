@@ -1,4 +1,4 @@
-baseURL = '/'
+baseURL = 'https://santerc.github.io/blog/'
 languageCode = 'zh-cn'
 title = 'SantercのBlog'
 theme = 'bandori-Rose&Monica'
