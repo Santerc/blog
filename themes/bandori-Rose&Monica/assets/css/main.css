@@ -8,7 +8,7 @@
    1. VARIABLES & THEME CONFIG
    ========================================================================== */
 :root {
-    /* --- ☀️ Light Mode: Morfonica (Blue Morpho) --- */
+    /* --- Light Mode: Morfonica  --- */
     --bg-image: 
         radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.8) 0%, transparent 40%),
         radial-gradient(circle at 90% 80%, rgba(162, 217, 255, 0.6) 0%, transparent 40%),
@@ -35,7 +35,7 @@
     --transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* --- 🌙 Dark Mode: Roselia (Stained Glass) --- */
+/* --- Dark Mode: Roselia --- */
 [data-theme="dark"] {
     --bg-image: 
         radial-gradient(circle at 20% 20%, rgba(139, 0, 139, 0.4) 0%, transparent 50%),
