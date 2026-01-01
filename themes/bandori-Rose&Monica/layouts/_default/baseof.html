@@ -34,8 +34,14 @@
         <script>console.log("CSS Mode: Static Fallback (RelURL)", "{{ "css/main.css" | relURL }}");</script>
     {{ end }}
 
+    <style>
+        html {
+            font-size: 80%; /* 这会让页面所有基于 rem 的尺寸缩小到 80% */
+        }
+    </style>
+
     <!-- 调试脚本：检查 CSS 是否真的加载成功 -->
-    <script>
+    {{/*  <script>
         window.addEventListener('load', function() {
             const cssLink = document.getElementById('main-css');
             if (cssLink) {
@@ -58,7 +64,7 @@
                 console.error("❌ CSS Link Element NOT FOUND!");
             }
         });
-    </script>
+    </script>  */}}
 
     <!-- Fuse.js 搜索库 -->
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>

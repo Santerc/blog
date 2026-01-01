@@ -30,31 +30,14 @@
         <script>console.log("CSS Mode: Assets Pipeline (Minified & Fingerprinted)", "\/blog\/css\/main.min.8f00a52c95683b8817c9fed655aa680ac6cbaaad3143158fe90b2b775e45b6c2.css");</script>
     
 
+    <style>
+        html {
+            font-size: 80%;  
+        }
+    </style>
+
     
-    <script>
-        window.addEventListener('load', function() {
-            const cssLink = document.getElementById('main-css');
-            if (cssLink) {
-                
-                try {
-                    const sheet = cssLink.sheet;
-                    if (sheet && sheet.cssRules.length > 0) {
-                        console.log("✅ CSS Loaded Successfully! Rules count:", sheet.cssRules.length);
-                    } else {
-                        console.warn("⚠️ CSS File found but seems empty or blocked by CORS.");
-                    }
-                } catch (e) {
-                    console.warn("⚠️ CSS Loaded but cannot access rules (likely CORS issue if on CDN/different domain):", e);
-                }
-                
-                
-                const bodyColor = window.getComputedStyle(document.body).color;
-                console.log("🎨 Computed Body Color:", bodyColor);
-            } else {
-                console.error("❌ CSS Link Element NOT FOUND!");
-            }
-        });
-    </script>
+    
 
     
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
