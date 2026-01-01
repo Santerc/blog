@@ -8,6 +8,10 @@ tags: ["Hugo", "教程", "前端开发"]
 
 # 👇建议同时也加上分类
 categories: ["技术笔记"]
+# 作者信息
+author: "Santerc"
+# 是否启用数学公式
+math: true
 ---
 
 这里是正文...

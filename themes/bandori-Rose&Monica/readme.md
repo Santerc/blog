@@ -99,7 +99,7 @@ just take an example:
 
 - name: "My Calculator"
   desc: "自制汇率计算器"
-  url: "/tools/calculator"  # Inner tools
+  url: "tools/calculator"  # Inner tools
   icon: "🧮"
   type: "internal"
 ```

@@ -5,11 +5,15 @@ draft: false
 tags: ["测试", "BIT"]
 categories: ["Log"]
 author: "Santerc"
+math: true
 ---
-# Tittle1
 ## 1.1
 Hello Hugo.
-# Tittle2
 ## 2.1
-Hello Hugo.
+公式测试
 
+$$
+\begin{aligned}
+\sum_{i=1}^{n} i &= \frac{n(n+1)}{2}
+\end{aligned}
+$$

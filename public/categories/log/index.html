@@ -24,7 +24,42 @@
 
     
     
-    <link rel="stylesheet" href="http://localhost:1313/blog/css/main.min.css">
+    
+        
+        <link rel="stylesheet" href="/blog/css/main.min.8f00a52c95683b8817c9fed655aa680ac6cbaaad3143158fe90b2b775e45b6c2.css" integrity="sha256-jwClLJVoO4gXyf7WVapoCsbLqq0xQxWP6Qsrd15FtsI=" id="main-css">
+        <script>console.log("CSS Mode: Assets Pipeline (Minified & Fingerprinted)", "\/blog\/css\/main.min.8f00a52c95683b8817c9fed655aa680ac6cbaaad3143158fe90b2b775e45b6c2.css");</script>
+    
+
+    <style>
+        html {
+            font-size: 80%;  
+        }
+    </style>
+
+    
+    
+    <script>
+        
+        const siteBaseURL = "http:\/\/localhost:1313\/blog\/";
+
+        
+        window.absURL = function(path) {
+            
+            if (path && (path.indexOf('http://') === 0 || path.indexOf('https://') === 0)) {
+                return path;
+            }
+            
+            
+            if (path && path.indexOf('/') === 0) {
+                path = path.substring(1);
+            }
+
+            return siteBaseURL + (path || "");
+        };
+        
+        
+        window.baseURL = siteBaseURL;
+    </script>
 
     
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
