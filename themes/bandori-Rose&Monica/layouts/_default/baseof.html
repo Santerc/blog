@@ -23,8 +23,14 @@
     </script>
 
     <!-- 样式表 -->
-    {{ $style := resources.Get "css/main.css" | minify }}
-    <link rel="stylesheet" href="{{ $style.Permalink }}">
+    {{ $style := resources.Get "css/main.css" }}
+    {{ if $style }}
+        {{ $style = $style | minify | fingerprint }}
+        <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
+    {{ else }}
+        <!-- 如果 assets 中找不到，尝试加载 static 目录下的文件 -->
+        <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+    {{ end }}
 
     <!-- Fuse.js 搜索库 -->
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
