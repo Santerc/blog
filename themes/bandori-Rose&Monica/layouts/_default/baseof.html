@@ -26,11 +26,39 @@
     {{ $style := resources.Get "css/main.css" }}
     {{ if $style }}
         {{ $style = $style | minify | fingerprint }}
-        <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
+        <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" id="main-css">
+        <script>console.log("CSS Mode: Assets Pipeline (Minified & Fingerprinted)", "{{ $style.RelPermalink }}");</script>
     {{ else }}
         <!-- 如果 assets 中找不到，尝试加载 static 目录下的文件 -->
-        <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+        <link rel="stylesheet" href="{{ "css/main.css" | relURL }}" id="main-css">
+        <script>console.log("CSS Mode: Static Fallback (RelURL)", "{{ "css/main.css" | relURL }}");</script>
     {{ end }}
+
+    <!-- 调试脚本：检查 CSS 是否真的加载成功 -->
+    <script>
+        window.addEventListener('load', function() {
+            const cssLink = document.getElementById('main-css');
+            if (cssLink) {
+                // 尝试获取样式表对象
+                try {
+                    const sheet = cssLink.sheet;
+                    if (sheet && sheet.cssRules.length > 0) {
+                        console.log("✅ CSS Loaded Successfully! Rules count:", sheet.cssRules.length);
+                    } else {
+                        console.warn("⚠️ CSS File found but seems empty or blocked by CORS.");
+                    }
+                } catch (e) {
+                    console.warn("⚠️ CSS Loaded but cannot access rules (likely CORS issue if on CDN/different domain):", e);
+                }
+                
+                // 再次确认计算样式
+                const bodyColor = window.getComputedStyle(document.body).color;
+                console.log("🎨 Computed Body Color:", bodyColor);
+            } else {
+                console.error("❌ CSS Link Element NOT FOUND!");
+            }
+        });
+    </script>
 
     <!-- Fuse.js 搜索库 -->
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
