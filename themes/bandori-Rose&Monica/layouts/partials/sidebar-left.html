@@ -62,27 +62,27 @@
     <div class="widget-title">// NAVIGATION</div>
     <ul class="menu-list">
         <li>
-            <a href="{{ .Site.BaseURL }}/">
+            <a href="{{ `` | absURL }}">
                 HOME <span>(00)</span>
             </a>
         </li>
         <li>
-            <a href="{{ .Site.BaseURL }}/posts/">
+            <a href="{{ `posts/` | absURL }}">
                 ARCHIVES <span>(01)</span>
             </a>
         </li>
         <li>
-            <a href="{{ .Site.BaseURL }}/tags/">
+            <a href="{{ `tags/` | absURL }}">
                 TAGS <span>(02)</span>
             </a>
         </li>
         <li>
-            <a href="{{ .Site.BaseURL }}/about/">
+            <a href="{{ `about/` | absURL }}">
                 ABOUT <span>(03)</span>
             </a>
         </li>
         <li>
-            <a href="{{ .Site.BaseURL }}/tools/">
+            <a href="{{ `tools/` | absURL }}">
                 TOOLKIT <span>(04)</span>
             </a>
         </li>
