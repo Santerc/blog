@@ -9,7 +9,17 @@
         <!-- 读取 data/tools.yml -->
         {{ if .Site.Data.tools }}
             {{ range .Site.Data.tools }}
-            <a href="{{ .url }}" {{ if eq .type "external" }}target="_blank"{{ end }} class="tool-card glass-panel">
+            
+            {{/* ———— 核心修复逻辑 ———— */}}
+            {{ $targetUrl := .url }}
+            
+            {{/* 如果 YAML 中标记为 internal，则使用 absURL 自动加上 /blog/ 前缀 */}}
+            {{ if eq .type "internal" }}
+                {{ $targetUrl = .url | absURL }}
+            {{ end }}
+            {{/* —————————————————————— */}}
+
+            <a href="{{ $targetUrl }}" {{ if eq .type "external" }}target="_blank"{{ end }} class="tool-card glass-panel">
                 <div class="tool-icon">{{ .icon }}</div>
                 <div class="tool-info">
                     <h3 class="tool-name">{{ .name }}</h3>

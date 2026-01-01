@@ -12,6 +12,6 @@
 
 - name: "My Calculator"
   desc: "自制汇率计算器"
-  url: "/tools/calculator"  # 指向内部工具
+  url: "tools/calculator"  # 指向内部工具
   icon: "🧮"
   type: "internal"

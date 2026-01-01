@@ -106,7 +106,7 @@ theme = 'bandori-Rose&Monica'     # 主题名称
 
 - name: "我的计算器"
   desc: "自制计算器"
-  url: "/tools/calculator"  # 内部工具
+  url: "tools/calculator"  # 内部工具
   icon: "🧮"
   type: "internal"
 ```

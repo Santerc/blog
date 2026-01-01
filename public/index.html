@@ -39,6 +39,28 @@
 
     
     
+    <script>
+        
+        const siteBaseURL = "http:\/\/localhost:1313\/blog\/";
+
+        
+        window.absURL = function(path) {
+            
+            if (path && (path.indexOf('http://') === 0 || path.indexOf('https://') === 0)) {
+                return path;
+            }
+            
+            
+            if (path && path.indexOf('/') === 0) {
+                path = path.substring(1);
+            }
+
+            return siteBaseURL + (path || "");
+        };
+        
+        
+        window.baseURL = siteBaseURL;
+    </script>
 
     
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
@@ -240,7 +262,7 @@
                 <span class="pulse-dot"></span>
                 <span>CODING_MODE</span>
             </div>
-            <div class="uptime">RUNNING: 16:57:20</div>
+            <div class="uptime">RUNNING: 17:20:03</div>
         </div>
         <div class="decor-progress">
             <div class="bar" style="width: 75%;"></div>

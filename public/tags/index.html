@@ -38,6 +38,28 @@
 
     
     
+    <script>
+        
+        const siteBaseURL = "http:\/\/localhost:1313\/blog\/";
+
+        
+        window.absURL = function(path) {
+            
+            if (path && (path.indexOf('http://') === 0 || path.indexOf('https://') === 0)) {
+                return path;
+            }
+            
+            
+            if (path && path.indexOf('/') === 0) {
+                path = path.substring(1);
+            }
+
+            return siteBaseURL + (path || "");
+        };
+        
+        
+        window.baseURL = siteBaseURL;
+    </script>
 
     
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>

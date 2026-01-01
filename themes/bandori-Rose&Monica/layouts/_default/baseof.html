@@ -65,6 +65,28 @@
             }
         });
     </script>  */}}
+    <script>
+        // 1. 获取 Hugo 渲染时的 BaseURL (例如: "https://santerc.github.io/blog/")
+        const siteBaseURL = "{{ .Site.BaseURL }}";
+
+        // 2. 定义全局工具函数，模拟 Hugo 的 absURL
+        window.absURL = function(path) {
+            // 如果路径已经是 http 开头，直接返回
+            if (path && (path.indexOf('http://') === 0 || path.indexOf('https://') === 0)) {
+                return path;
+            }
+            
+            // 确保 path 不以 / 开头 (因为 BaseURL 通常已有尾部 /)
+            if (path && path.indexOf('/') === 0) {
+                path = path.substring(1);
+            }
+
+            return siteBaseURL + (path || "");
+        };
+        
+        // 兼容旧代码的 baseURL 变量
+        window.baseURL = siteBaseURL;
+    </script>
 
     <!-- Fuse.js 搜索库 -->
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>

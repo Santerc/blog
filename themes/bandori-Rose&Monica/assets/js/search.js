@@ -1,23 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
+
     // ===============================================
-    // 1. 全局侧边栏逻辑：回车跳转
+    // 侧边栏回车跳转
     // ===============================================
     const sidebarInput = document.getElementById('global-search-input');
-    
     if (sidebarInput) {
         sidebarInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 const term = sidebarInput.value.trim();
                 if (term) {
-                    window.location.href = `/search/?q=${encodeURIComponent(term)}`;
+                    // 使用 getUrl 构建正确的搜索结果页路径
+                    window.location.href = window.absURL(`search/?q=${encodeURIComponent(term)}`);
                 }
             }
         });
     }
 
     // ===============================================
-    // 2. 搜索结果页逻辑：执行模糊搜索
+    // 搜索逻辑
     // ===============================================
     const searchWrapper = document.getElementById('search-result-wrapper');
     const searchKeywordLabel = document.getElementById('search-keyword');
@@ -30,9 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (query) {
             searchKeywordLabel.innerText = `"${query}"`;
             searchStatusLabel.innerText = "SCANNING_DATABASE...";
-            
             if(sidebarInput) sidebarInput.value = query;
-
             executeSearch(query);
         } else {
             searchKeywordLabel.innerText = "NULL";
@@ -42,37 +41,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function executeSearch(query) {
-        fetch('/index.json')
-            .then(response => response.json())
+        // 获取 index.json
+        fetch(window.absURL('index.json'))
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
+            })
             .then(data => {
-                // Debug:数据清洗：去重 + 过滤
+                // 数据清洗
                 const uniquePosts = Array.from(new Map(data.map(item => [item.permalink, item])).values());
                 const cleanData = uniquePosts.filter(post => {
-                    const isSearchPage = post.permalink.includes('/search/');
-                    const hasTitle = post.title && post.title.trim() !== '';
-                    return !isSearchPage && hasTitle;
+                    // 过滤掉搜索页本身和无标题页面
+                    return !post.permalink.includes('/search/') && post.title && post.title.trim() !== '';
                 });
 
-                const options = {
+                const fuse = new Fuse(cleanData, {
                     includeScore: true,
                     threshold: 0.4, 
-                    keys: [
-                        { name: 'title', weight: 0.7 },
-                        { name: 'tags', weight: 0.2 },
-                        { name: 'categories', weight: 0.1 },
-                        { name: 'summary', weight: 0.1 },
-                        { name: 'content', weight: 0.1 }
-                    ]
-                };
+                    keys: ['title', 'tags', 'categories', 'summary', 'content']
+                });
 
-                const fuse = new Fuse(cleanData, options);
-                const results = fuse.search(query);
-
-                renderSearchResults(results);
+                renderSearchResults(fuse.search(query));
             })
             .catch(err => {
-                console.error(err);
+                console.error("Search Error:", err);
                 searchStatusLabel.innerText = "SYSTEM_ERROR";
+                searchWrapper.innerHTML = `<div class="post-item" style="text-align:center; color:red;">// ERROR: ${err.message}</div>`;
             });
     }
 
@@ -83,41 +77,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="post-item" style="text-align: center; padding: 4rem 0;">
                     <h2 style="color: var(--text-muted); font-family: 'JetBrains Mono';">ERROR: 404_RESULT</h2>
                     <p>No entries found in the memory sector.</p>
-                </div>
-            `;
+                </div>`;
             return;
         }
 
         searchStatusLabel.innerText = `FOUND ${results.length} ENTRIES`;
-        let html = '';
-
-        results.forEach(item => {
+        
+        const html = results.map(item => {
             const post = item.item;
-            
-            const summaryHtml = post.summary 
-                ? `<p class="summary" style="margin-top: 1rem; font-size: 0.95rem; color: var(--text-muted);">${post.summary}</p>` 
-                : '';
+            // 确保 permalink 是正确的 (通常 index.json 里已经是绝对路径了，但为了保险)
+            const postLink = post.permalink; 
 
-            html += `
+            return `
                 <article class="post-item" style="animation: fadeUp 0.5s ease forwards;">
                     <span class="post-meta">
-                        ${post.date} 
-                        ${post.tags ? `// [${post.tags.join(', ')}]` : ''}
+                        ${post.date} ${post.tags ? `// [${post.tags.join(', ')}]` : ''}
                     </span>
                     <h2 class="post-title">
-                        <a href="${post.permalink}">${post.title}</a>
+                        <a href="${postLink}">${post.title}</a>
                     </h2>
-                    
-                    ${summaryHtml}
-                    
+                    ${post.summary ? `<p class="summary" style="margin-top: 1rem; font-size: 0.95rem; color: var(--text-muted);">${post.summary}</p>` : ''}
                     <div style="margin-top: 1rem;">
-                        <a href="${post.permalink}" style="font-family: 'JetBrains Mono'; font-size: 0.85rem;">
-                            &gt; READ_LOG
-                        </a>
+                        <a href="${postLink}" style="font-family: 'JetBrains Mono'; font-size: 0.85rem;">&gt; READ_LOG</a>
                     </div>
                 </article>
             `;
-        });
+        }).join('');
 
         searchWrapper.innerHTML = html;
     }
