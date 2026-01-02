@@ -179,5 +179,8 @@
     
     {{ $search := resources.Get "js/search.js" | minify }}
     <script src="{{ $search.Permalink }}"></script>
+
+    <!-- PJAX Navigation -->
+    <script src="{{ "js/pjax.js" | relURL }}"></script>
 </body>
 </html>

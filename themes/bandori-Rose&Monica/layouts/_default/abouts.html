@@ -214,7 +214,7 @@
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+function initAboutPage() {
     // --- Typing Effect ---
     const roleElement = document.getElementById('typing-role');
     const roles = [];
@@ -511,6 +511,11 @@ document.addEventListener('DOMContentLoaded', function() {
             terminalInput.focus();
         });
     }
-});
+}
+
+// Run on initial load
+document.addEventListener('DOMContentLoaded', initAboutPage);
+// Run immediately (for PJAX)
+initAboutPage();
 </script>
 {{ end }}

@@ -14,20 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentTrackIndex = 0;
     let isPlaying = false;
 
-    // 1. Layout Logic (Teleportation)
-    if (target && player) {
-        // We are on About page
-        target.appendChild(player);
-        player.classList.remove('mode-mini');
-        player.classList.add('mode-full');
-        player.style.display = 'flex'; // Ensure visible
-    } else if (player) {
-        // We are on other pages
-        player.classList.remove('mode-full');
-        player.classList.add('mode-mini');
-        player.style.display = 'flex'; // Ensure visible
-    }
-
+    // 1. Layout Logic (Teleportation) - Moved to initPlayerLayout function
+    
     // 2. Playlist Logic
     const playlist = window.sitePlaylist || [];
     
@@ -163,6 +151,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize
     restoreState();
+    initPlayerLayout(); // Run initially
+
+    // Listen for PJAX navigation end
+    window.addEventListener('pjax:end', () => {
+        initPlayerLayout();
+    });
+
+    function initPlayerLayout() {
+        const target = document.getElementById('about-player-target');
+        
+        if (target && player) {
+            // We are on About page
+            target.appendChild(player);
+            player.classList.remove('mode-mini');
+            player.classList.add('mode-full');
+            player.style.display = 'flex'; 
+        } else if (player) {
+            // We are on other pages
+            // Need to move it back to header if it's not there
+            // But where in header? We need a container in header.
+            // Let's assume we can append it to .header-right-group or insert before theme toggle
+            const headerGroup = document.querySelector('.header-right-group');
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            if (headerGroup && themeToggle) {
+                headerGroup.insertBefore(player, themeToggle);
+                player.classList.remove('mode-full');
+                player.classList.add('mode-mini');
+                player.style.display = 'flex';
+            }
+        }
+    }
 
     // Expose API for Terminal
     window.musicPlayer = {

@@ -697,7 +697,7 @@
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+function initAboutPage() {
     
     const roleElement = document.getElementById('typing-role');
     const roles = [];
@@ -1002,7 +1002,12 @@ document.addEventListener('DOMContentLoaded', function() {
             terminalInput.focus();
         });
     }
-});
+}
+
+
+document.addEventListener('DOMContentLoaded', initAboutPage);
+
+initAboutPage();
 </script>
 
         </main>
@@ -1148,5 +1153,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     
     <script src="http://localhost:1313/blog/js/search.min.js"></script>
+
+    
+    <script src="/blog/js/pjax.js"></script>
 </body>
 </html>
