@@ -378,6 +378,133 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(typeRole, 2000);
     }
 
+    // --- Snake Game Logic ---
+    const snakeGame = {
+        isRunning: false,
+        timer: null,
+        width: 30,
+        height: 15,
+        snake: [],
+        direction: {x: 1, y: 0},
+        food: {x: 0, y: 0},
+        score: 0,
+        gameDiv: null,
+
+        start: function() {
+            this.isRunning = true;
+            this.snake = [{x: 5, y: 5}, {x: 4, y: 5}, {x: 3, y: 5}];
+            this.direction = {x: 1, y: 0};
+            this.score = 0;
+            this.spawnFood();
+            
+            // Hide terminal content
+            Array.from(terminalOutput.children).forEach(c => c.style.display = 'none');
+            
+            // Create game container
+            this.gameDiv = document.createElement('div');
+            this.gameDiv.style.fontFamily = "'JetBrains Mono', monospace";
+            this.gameDiv.style.lineHeight = "1.2";
+            this.gameDiv.style.whiteSpace = "pre";
+            this.gameDiv.style.color = "#98c379";
+            this.gameDiv.style.textAlign = "center";
+            terminalOutput.appendChild(this.gameDiv);
+            
+            terminalInput.blur(); // Remove focus from input
+            
+            this.timer = setInterval(() => this.update(), 200);
+            window.addEventListener('keydown', this.handleInput);
+        },
+
+        stop: function() {
+            this.isRunning = false;
+            clearInterval(this.timer);
+            window.removeEventListener('keydown', this.handleInput);
+            
+            if(this.gameDiv) {
+                this.gameDiv.remove();
+                this.gameDiv = null;
+            }
+            
+            // Show terminal content
+            Array.from(terminalOutput.children).forEach(c => c.style.display = '');
+            terminalInput.focus();
+            
+            // Print game over message
+            const outputDiv = document.createElement('div');
+            outputDiv.className = 'command-output';
+            outputDiv.innerHTML = `Game Over! Score: ${this.score}`;
+            terminalOutput.insertBefore(outputDiv, inputLine);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        },
+
+        handleInput: function(e) {
+            if(!snakeGame.isRunning) return;
+            
+            switch(e.key) {
+                case 'ArrowUp': case 'w': if(snakeGame.direction.y === 0) snakeGame.direction = {x: 0, y: -1}; break;
+                case 'ArrowDown': case 's': if(snakeGame.direction.y === 0) snakeGame.direction = {x: 0, y: 1}; break;
+                case 'ArrowLeft': case 'a': if(snakeGame.direction.x === 0) snakeGame.direction = {x: -1, y: 0}; break;
+                case 'ArrowRight': case 'd': if(snakeGame.direction.x === 0) snakeGame.direction = {x: 1, y: 0}; break;
+                case 'q': case 'Escape': snakeGame.stop(); break;
+            }
+            e.preventDefault(); // Prevent scrolling
+        },
+
+        spawnFood: function() {
+            let valid = false;
+            while(!valid) {
+                this.food = {
+                    x: Math.floor(Math.random() * this.width),
+                    y: Math.floor(Math.random() * this.height)
+                };
+                valid = !this.snake.some(s => s.x === this.food.x && s.y === this.food.y);
+            }
+        },
+
+        update: function() {
+            const head = {x: this.snake[0].x + this.direction.x, y: this.snake[0].y + this.direction.y};
+            
+            // Check collision
+            if(head.x < 0 || head.x >= this.width || head.y < 0 || head.y >= this.height || 
+               this.snake.some(s => s.x === head.x && s.y === head.y)) {
+                this.stop();
+                return;
+            }
+            
+            this.snake.unshift(head);
+            
+            if(head.x === this.food.x && head.y === this.food.y) {
+                this.score += 10;
+                this.spawnFood();
+            } else {
+                this.snake.pop();
+            }
+            
+            this.draw();
+        },
+
+        draw: function() {
+            let output = `SNAKE GAME - Score: ${this.score} (Press 'q' to quit)\n`;
+            output += '+' + '-'.repeat(this.width) + '+\n';
+            
+            for(let y=0; y<this.height; y++) {
+                output += '|';
+                for(let x=0; x<this.width; x++) {
+                    if(this.snake[0].x === x && this.snake[0].y === y) output += 'O';
+                    else if(this.snake.some(s => s.x === x && s.y === y)) output += 'o';
+                    else if(this.food.x === x && this.food.y === y) output += '*';
+                    else output += ' ';
+                }
+                output += '|\n';
+            }
+            output += '+' + '-'.repeat(this.width) + '+';
+            
+            if(this.gameDiv) this.gameDiv.textContent = output;
+        }
+    };
+    // Bind handleInput context
+    snakeGame.handleInput = snakeGame.handleInput.bind(snakeGame);
+
     // --- Terminal Logic ---
     const terminalInput = document.getElementById('terminal-input');
     const terminalOutput = document.getElementById('terminal-output');
@@ -405,10 +532,15 @@ document.addEventListener('DOMContentLoaded', function() {
   <span style="color: var(--primary)">whoami</span>    - Display user info
   <span style="color: var(--primary)">skills</span>    - List technical skills
   <span style="color: var(--primary)">music</span>     - Control music player
+  <span style="color: var(--primary)">snake</span>     - Play Snake game (Easter Egg!)
   <span style="color: var(--primary)">contact</span>   - Show contact info
   <span style="color: var(--primary)">clear</span>     - Clear terminal
   <span style="color: var(--primary)">date</span>      - Show current date`;
                         break;
+                    case 'snake':
+                        snakeGame.start();
+                        this.value = ''; // Clear input
+                        return; // Skip default output handling
                     case 'music':
                         const subCmd = parts[1] ? parts[1].toLowerCase() : 'list';
                         
