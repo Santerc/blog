@@ -13,7 +13,7 @@
       <link>http://localhost:1313/blog/posts/ttt/</link>
       <pubDate>Mon, 29 Dec 2025 17:16:56 +0800</pubDate>
       <guid>http://localhost:1313/blog/posts/ttt/</guid>
-      <description>&lt;h2 id=&#34;11&#34;&gt;1.1&lt;/h2&gt;&#xA;&lt;p&gt;Hello Hugo.&lt;/p&gt;&#xA;&lt;h2 id=&#34;21&#34;&gt;2.1&lt;/h2&gt;&#xA;&lt;p&gt;公式测试&lt;/p&gt;&#xA;&lt;p&gt;$$&#xA;\begin{aligned}&#xA;\sum_{i=1}^{n} i &amp;amp;= \frac{n(n+1)}{2}&#xA;\end{aligned}&#xA;$$&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;11&#34;&gt;1.1&lt;/h2&gt;&#xA;&lt;p&gt;Hello Hugo.&lt;/p&gt;&#xA;&lt;h2 id=&#34;21&#34;&gt;2.1&lt;/h2&gt;&#xA;&lt;p&gt;公式测试&lt;/p&gt;&#xA;&lt;p&gt;$$&#xA;\begin{aligned}&#xA;\sum_{i=1}^{n} i &amp;amp;= \frac{n(n+1)}{2}&#xA;\end{aligned}&#xA;$$&lt;/p&gt;&#xA;&lt;h2 id=&#34;31&#34;&gt;3.1&lt;/h2&gt;&#xA;&lt;p&gt;表格测试&lt;/p&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;列1&lt;/th&gt;&#xA;          &lt;th&gt;列2&lt;/th&gt;&#xA;          &lt;th&gt;列3&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;1&lt;/td&gt;&#xA;          &lt;td&gt;2&lt;/td&gt;&#xA;          &lt;td&gt;3&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;</description>
     </item>
   </channel>
 </rss>
