@@ -231,7 +231,7 @@
         <div class="about-info">
             <h1 class="about-name" style="font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem;">Santerc</h1>
             <p class="about-role" style="font-family: 'JetBrains Mono'; color: var(--primary); font-weight: bold; min-height: 1.5em;">
-                // <span id="typing-role">Full Stack Developer</span><span class="cursor-blink">_</span>
+                // <span id="typing-role">College Student</span><span class="cursor-blink">_</span>
             </p>
             <p class="about-loc" style="color: var(--text-muted);">📍 China/Beijing</p>
         </div>
@@ -246,7 +246,7 @@
             <div class="about-bio glass-panel" style="padding: 2rem; border-radius: 12px;">
                 <div class="panel-title" style="font-family: 'JetBrains Mono'; font-weight: bold; color: var(--text-muted); margin-bottom: 1rem; border-bottom: 1px dashed var(--border); padding-bottom: 5px;">// BIO_DATA</div>
                 <div class="post-content">
-                    <p>北京理工大学自动化大四学生</p>
+                    <p>北京理工大学自动化大四学生,退役RMer（23-25），2024赛季北理追梦战队哨兵负责人，25赛季电控顾问，萝符号，ボカロ 爱好者</p>
 
                 </div>
             </div>
@@ -317,11 +317,11 @@
                     
                     <div class="skill-item" style="width: 100%;">
                         <div class="skill-info" style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px; font-family: 'JetBrains Mono';">
-                            <span>Embedded</span>
-                            <span>90%</span>
+                            <span>Control Theory</span>
+                            <span>80%</span>
                         </div>
                         <div class="progress-bg" style="width: 100%; height: 8px; background: rgba(100,100,100,0.1); border-radius: 4px; overflow: hidden;">
-                            <div class="progress-bar" style="height: 100%; width: 90%; background: var(--primary); border-radius: 4px;"></div>
+                            <div class="progress-bar" style="height: 100%; width: 80%; background: var(--primary); border-radius: 4px;"></div>
                         </div>
                     </div>
                     
@@ -337,11 +337,11 @@
                     
                     <div class="skill-item" style="width: 100%;">
                         <div class="skill-info" style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px; font-family: 'JetBrains Mono';">
-                            <span>Hugo</span>
-                            <span>70%</span>
+                            <span>ROS</span>
+                            <span>30%</span>
                         </div>
                         <div class="progress-bg" style="width: 100%; height: 8px; background: rgba(100,100,100,0.1); border-radius: 4px; overflow: hidden;">
-                            <div class="progress-bar" style="height: 100%; width: 70%; background: var(--primary); border-radius: 4px;"></div>
+                            <div class="progress-bar" style="height: 100%; width: 30%; background: var(--primary); border-radius: 4px;"></div>
                         </div>
                     </div>
                     
@@ -357,7 +357,7 @@
                     
                     <span class="tech-tag">Embedded</span>
                     
-                    <span class="tech-tag">Hugo</span>
+                    <span class="tech-tag">ROS</span>
                     
                     <span class="tech-tag">Python</span>
                     
@@ -586,7 +586,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     const roleElement = document.getElementById('typing-role');
-    const roles = ["Full Stack Developer", "Embedded Engineer", "Open Source Enthusiast", "Student"];
+    const roles = [];
+    
+        
+        roles.push("College Student");
+        
+        roles.push("Yukki,love!");
+        
+        roles.push("RoboMaster");
+        
+        roles.push("Addicted with Elec DIY");
+        
+    
+
     let roleIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
@@ -824,16 +836,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                         break;
                     case 'whoami':
-                        output = "User: Santerc\nRole: Full Stack Developer\nLocation: China\/Beijing";
+                        output = "User: Santerc\nRole: College Student\nLocation: China\/Beijing";
                         break;
                     case 'skills':
                         output = "Loaded Skills:\n";
                         
-                        output += "  - Embedded [90%]\n";
+                        output += "  - Control Theory [80%]\n";
                         
                         output += "  - C\/C\u002b\u002b [60%]\n";
                         
-                        output += "  - Hugo [70%]\n";
+                        output += "  - ROS [30%]\n";
                         
                         break;
                     case 'contact':

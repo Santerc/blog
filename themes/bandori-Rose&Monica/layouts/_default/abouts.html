@@ -338,7 +338,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Typing Effect ---
     const roleElement = document.getElementById('typing-role');
-    const roles = ["{{ .Params.role }}", "Embedded Engineer", "Open Source Enthusiast", "Student"];
+    const roles = [];
+    {{ if .Params.roles }}
+        {{ range .Params.roles }}
+        roles.push("{{ . }}");
+        {{ end }}
+    {{ else }}
+        roles.push("{{ .Params.role }}");
+    {{ end }}
+
     let roleIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
