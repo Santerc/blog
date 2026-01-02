@@ -136,4 +136,80 @@ document.addEventListener('DOMContentLoaded', () => {
             closeAllSidebars();
         }
     });
+
+    // ===============================================
+    // 5. Copy Code Button Logic
+    // ===============================================
+    function initCopyButtons() {
+        console.log("Initializing Copy Buttons..."); 
+        const preBlocks = document.querySelectorAll('pre');
+        console.log(`Found ${preBlocks.length} pre blocks.`);
+
+        preBlocks.forEach(pre => {
+            // Prevent double initialization
+            if (pre.parentNode.classList.contains('code-wrapper') || 
+                pre.parentNode.querySelector('.copy-code-btn') || 
+                pre.querySelector('.copy-code-btn')) {
+                return;
+            }
+
+            let container = pre.parentNode;
+            
+            // Check if it's a standard Hugo highlight div
+            if (container.classList.contains('highlight')) {
+                container.style.position = 'relative';
+            } else {
+                // Create a wrapper for bare pre tags
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-wrapper';
+                wrapper.style.position = 'relative';
+                wrapper.style.margin = '2rem 0'; // Match pre margin
+                
+                // Insert wrapper before pre
+                pre.parentNode.insertBefore(wrapper, pre);
+                // Move pre into wrapper
+                wrapper.appendChild(pre);
+                
+                // Reset pre margin to avoid double margin
+                pre.style.margin = '0';
+                
+                container = wrapper;
+            }
+
+            const btn = document.createElement('button');
+            btn.className = 'copy-code-btn';
+            btn.textContent = 'Copy';
+            
+            btn.addEventListener('click', () => {
+                // Get code text (handle both <code> and raw text)
+                const code = pre.querySelector('code');
+                let text = code ? code.innerText : pre.innerText;
+                
+                navigator.clipboard.writeText(text).then(() => {
+                    btn.textContent = 'Copied!';
+                    btn.classList.add('copied');
+                    
+                    setTimeout(() => {
+                        btn.textContent = 'Copy';
+                        btn.classList.remove('copied');
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy:', err);
+                    btn.textContent = 'Error';
+                });
+            });
+            
+            container.appendChild(btn);
+            console.log("Button added to:", container);
+        });
+    }
+
+    // Run initially
+    initCopyButtons();
+
+    // Run on PJAX end
+    window.addEventListener('pjax:end', () => {
+        initCopyButtons();
+        // Re-init TOC scrollspy if needed (omitted for brevity, but good practice)
+    });
 });

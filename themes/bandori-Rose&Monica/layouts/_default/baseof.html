@@ -171,8 +171,8 @@
         });"></script>
     {{ end }}
 
-    {{ $js := resources.Get "js/main.js" | minify }}
-    <script src="{{ $js.Permalink }}"></script>
+    {{ $js := resources.Get "js/main.js" | minify | fingerprint }}
+    <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
 
     {{ $cursor := resources.Get "js/cursor.js" | minify }}
     <script src="{{ $cursor.Permalink }}"></script>

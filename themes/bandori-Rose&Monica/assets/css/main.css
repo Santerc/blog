@@ -181,7 +181,45 @@ aside::-webkit-scrollbar { display: none; }
 .post-content { font-size: 1.15rem; line-height: 1.8; }
 .post-content h2 { margin-top: 2rem; color: var(--primary); border-left: 4px solid var(--primary); padding-left: 1rem; }
 .post-content img { max-width: 100%; border-radius: 8px; border: 1px solid var(--glass-border); margin: 2rem auto; display: block; background: var(--glass-bg-subtle); padding: 5px; }
-pre { background: var(--code-bg); padding: 1.5rem; border-radius: 8px; overflow-x: auto; font-size: 0.95rem; border: 1px solid var(--border); margin: 2rem 0; }
+pre { background: var(--code-bg); padding: 1.5rem; border-radius: 8px; overflow-x: auto; font-size: 0.95rem; border: 1px solid var(--border); margin: 2rem 0; font-family: 'JetBrains Mono', monospace; position: relative; }
+code { font-family: 'JetBrains Mono', monospace; }
+
+/* Copy Code Button */
+.copy-code-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    opacity: 0.7; /* Visible by default */
+    z-index: 10;
+}
+.highlight:hover .copy-code-btn,
+.code-wrapper:hover .copy-code-btn {
+    opacity: 1;
+    background: var(--glass-bg);
+}
+.copy-code-btn:hover {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+    opacity: 1;
+}
+.copy-code-btn.copied {
+    background: #4caf50;
+    color: #fff;
+    border-color: #4caf50;
+}
+[data-theme="dark"] .copy-code-btn {
+    background: rgba(0, 0, 0, 0.6);
+}
 
 /* Widgets */
 .widget {

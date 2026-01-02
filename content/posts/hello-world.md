@@ -5,3 +5,11 @@ title = 'Hello World'
 +++
 # Test
 这是一个测试
+```cpp
+#include <iostream>
+using namespace std;
+int main()
+{
+    cout << "Hello World!" << endl;
+}
+```
