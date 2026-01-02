@@ -317,13 +317,16 @@ document.addEventListener('DOMContentLoaded', function() {
   <span style="color: var(--primary)">date</span>      - Show current date`;
                         break;
                     case 'whoami':
-                        output = `User: {{ .Params.nickname }}\nRole: {{ .Params.role }}\nLocation: {{ .Params.location }}`;
+                        output = "User: {{ .Params.nickname }}\nRole: {{ .Params.role }}\nLocation: {{ .Params.location }}";
                         break;
                     case 'skills':
-                        output = `Loaded Skills:\n{{ range .Params.skills }}  - {{ .name }} [{{ .percent }}%]\n{{ end }}`;
+                        output = "Loaded Skills:\n";
+                        {{ range .Params.skills }}
+                        output += "  - {{ .name }} [{{ .percent }}%]\n";
+                        {{ end }}
                         break;
                     case 'contact':
-                        output = `GitHub: https://github.com/{{ .Params.nickname }}\nEmail: (Hidden for privacy)`;
+                        output = "GitHub: https://github.com/{{ .Params.nickname }}\nEmail: (Hidden for privacy)";
                         break;
                     case 'date':
                         output = new Date().toString();

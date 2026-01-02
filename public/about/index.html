@@ -563,13 +563,20 @@ document.addEventListener('DOMContentLoaded', function() {
   <span style="color: var(--primary)">date</span>      - Show current date`;
                         break;
                     case 'whoami':
-                        output = `User: Santerc\nRole: Full Stack Developer\nLocation: China\/Beijing`;
+                        output = "User: Santerc\nRole: Full Stack Developer\nLocation: China\/Beijing";
                         break;
                     case 'skills':
-                        output = `Loaded Skills:\n  - Embedded [90%]\n  - C\/C\u002b\u002b [60%]\n  - Hugo [70%]\n`;
+                        output = "Loaded Skills:\n";
+                        
+                        output += "  - Embedded [90%]\n";
+                        
+                        output += "  - C\/C\u002b\u002b [60%]\n";
+                        
+                        output += "  - Hugo [70%]\n";
+                        
                         break;
                     case 'contact':
-                        output = `GitHub: https://github.com/Santerc\nEmail: (Hidden for privacy)`;
+                        output = "GitHub: https://github.com/Santerc\nEmail: (Hidden for privacy)";
                         break;
                     case 'date':
                         output = new Date().toString();
