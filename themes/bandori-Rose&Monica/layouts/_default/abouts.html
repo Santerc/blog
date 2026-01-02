@@ -34,37 +34,10 @@
                 <div class="panel-title" style="font-family: 'JetBrains Mono'; font-weight: bold; color: var(--text-muted); margin-bottom: 1rem; border-bottom: 1px dashed var(--border); padding-bottom: 5px;">// STATUS_MONITOR</div>
                 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <!-- 自定义网易云播放器 -->
-                    <div id="custom-player" class="music-player">
-                        <!-- 封面/唱片 -->
-                        <div class="album-art" style="width: 50px; height: 50px; background: #333; border-radius: 50%; position: relative; overflow: hidden; flex-shrink: 0; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
-                            <img id="music-cover" src="" alt="cover" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.8;">
-                            <div class="vinyl-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 15px; height: 15px; background: #1a1a1a; border-radius: 50%; border: 2px solid rgba(255,255,255,0.1); z-index: 2;"></div>
-                        </div>
-                        
-                        <!-- 信息与波形 -->
-                        <div class="track-info" style="flex-grow: 1; min-width: 0;">
-                            <div id="music-title" style="font-size: 0.9rem; font-weight: bold; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Loading...</div>
-                            <div id="music-artist" style="font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">...</div>
-                            
-                            <!-- 动态波形 -->
-                            <div class="waveform" style="display: flex; align-items: flex-end; gap: 2px; height: 15px; margin-top: 5px;">
-                                <div class="bar" style="width: 3px; height: 60%; background: var(--primary); animation: wave 0.5s infinite alternate;"></div>
-                                <div class="bar" style="width: 3px; height: 90%; background: var(--primary); animation: wave 0.7s infinite alternate;"></div>
-                                <div class="bar" style="width: 3px; height: 40%; background: var(--primary); animation: wave 0.6s infinite alternate;"></div>
-                                <div class="bar" style="width: 3px; height: 70%; background: var(--primary); animation: wave 0.4s infinite alternate;"></div>
-                                <div class="bar" style="width: 3px; height: 50%; background: var(--primary); animation: wave 0.8s infinite alternate;"></div>
-                            </div>
-                        </div>
-
-                        <!-- 播放状态图标 -->
-                        <div class="play-status" style="font-size: 1.2rem; color: var(--primary);">
-                            <i class="fas fa-play" id="play-icon">▶</i>
-                        </div>
+                    <!-- 自定义网易云播放器 (Target Container for Global Player) -->
+                    <div id="about-player-target" style="min-height: 80px; display: flex;">
+                        <!-- The global player will be moved here by JS -->
                     </div>
-
-                    <!-- 动态生成的 Audio 标签 -->
-                    <audio id="bgm-audio" loop></audio>
 
                     <!-- 系统状态模拟 -->
                     <div class="sys-stats" style="display: flex; flex-direction: column; gap: 10px; justify-content: center;">
@@ -242,100 +215,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // --- Music Player Logic ---
-    const player = document.getElementById('custom-player');
-    const audio = document.getElementById('bgm-audio');
-    const playIcon = document.getElementById('play-icon');
-    const titleElem = document.getElementById('music-title');
-    const artistElem = document.getElementById('music-artist');
-    const coverElem = document.getElementById('music-cover');
-
-    // 1. Build Playlist
-    const playlist = [];
-    {{ if .Params.playlist }}
-        {{ range .Params.playlist }}
-        playlist.push({
-            title: "{{ .title }}",
-            artist: "{{ .artist }}",
-            cover: "{{ .cover }}",
-            theme: "{{ .theme }}",
-            url: "{{ if .url }}{{ .url | relURL }}{{ else }}https://music.163.com/song/media/outer/url?id={{ .id }}.mp3{{ end }}"
-        });
-        {{ end }}
-    {{ else }}
-        // Fallback
-        playlist.push({
-            title: "{{ .Params.music_title | default "Unknown" }}",
-            artist: "{{ .Params.music_artist | default "Unknown" }}",
-            cover: "{{ .Params.music_cover | default "" }}",
-            url: "{{ if .Params.music_url }}{{ .Params.music_url | relURL }}{{ else }}https://music.163.com/song/media/outer/url?id={{ .Params.music_id | default "1901371647" }}.mp3{{ end }}"
-        });
-    {{ end }}
-
-    let currentTrackIndex = 0;
-
-    function loadTrack(index) {
-        if (index < 0 || index >= playlist.length) return;
-        const track = playlist[index];
-        currentTrackIndex = index;
-        
-        if(titleElem) titleElem.textContent = track.title;
-        if(artistElem) artistElem.textContent = track.artist;
-        if(coverElem) coverElem.src = track.cover || "https://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg";
-        if(audio) audio.src = track.url;
-    }
-
-    function playTrack(index) {
-        loadTrack(index);
-        if(audio) {
-            audio.play().then(() => {
-                if(player) player.classList.add('playing');
-                if(playIcon) playIcon.textContent = '⏸';
-            }).catch(e => {
-                console.error("Play failed", e);
-                if(playIcon) playIcon.textContent = '✖';
-            });
-        }
-    }
-
-    // Initialize
-    if (playlist.length > 0) {
-        // Check theme
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        let defaultIndex = 0;
-        
-        // Find first matching theme
-        const themeMatchIndex = playlist.findIndex(t => t.theme === (isDark ? 'dark' : 'light'));
-        if (themeMatchIndex !== -1) {
-            defaultIndex = themeMatchIndex;
-        }
-        
-        loadTrack(defaultIndex);
-    }
-
-    // Player Click Event
-    if(player && audio) {
-        player.addEventListener('click', function() {
-            if (audio.paused) {
-                audio.play().then(() => {
-                    player.classList.add('playing');
-                    playIcon.textContent = '⏸';
-                }).catch(e => console.error(e));
-            } else {
-                audio.pause();
-                player.classList.remove('playing');
-                playIcon.textContent = '▶';
-            }
-        });
-        
-        audio.addEventListener('ended', function() {
-             if(!audio.loop) {
-                player.classList.remove('playing');
-                playIcon.textContent = '▶';
-             }
-        });
-    }
-
     // --- Typing Effect ---
     const roleElement = document.getElementById('typing-role');
     const roles = [];
@@ -552,35 +431,37 @@ document.addEventListener('DOMContentLoaded', function() {
                     case 'music':
                         const subCmd = parts[1] ? parts[1].toLowerCase() : 'list';
                         
-                        if (subCmd === 'list') {
-                            output = "Playlist:\n";
-                            playlist.forEach((track, i) => {
-                                const marker = (i === currentTrackIndex) ? "*" : " ";
-                                output += `${marker} [${i}] ${track.title} - ${track.artist}\n`;
-                            });
-                        } else if (subCmd === 'play') {
-                            const idx = parseInt(parts[2]);
-                            if (!isNaN(idx) && idx >= 0 && idx < playlist.length) {
-                                playTrack(idx);
-                                output = `Playing: ${playlist[idx].title}`;
+                        if (window.musicPlayer) {
+                            if (subCmd === 'list') {
+                                output = "Playlist:\n";
+                                const list = window.musicPlayer.list();
+                                const curIdx = window.musicPlayer.getCurrentIndex();
+                                list.forEach((track, i) => {
+                                    const marker = (i === curIdx) ? "*" : " ";
+                                    output += `${marker} [${i}] ${track.title} - ${track.artist}\n`;
+                                });
+                            } else if (subCmd === 'play') {
+                                const idx = parseInt(parts[2]);
+                                if (!isNaN(idx)) {
+                                    window.musicPlayer.play(idx);
+                                    output = `Playing track ${idx}`;
+                                } else {
+                                    output = "Invalid track index. Usage: music play <index>";
+                                }
+                            } else if (subCmd === 'next') {
+                                window.musicPlayer.next();
+                                output = "Playing next track";
+                            } else if (subCmd === 'prev') {
+                                window.musicPlayer.prev();
+                                output = "Playing previous track";
+                            } else if (subCmd === 'stop') {
+                                window.musicPlayer.stop();
+                                output = "Music stopped.";
                             } else {
-                                output = "Invalid track index. Usage: music play <index>";
+                                output = "Usage: music [list|play <index>|next|prev|stop]";
                             }
-                        } else if (subCmd === 'next') {
-                            const nextIdx = (currentTrackIndex + 1) % playlist.length;
-                            playTrack(nextIdx);
-                            output = `Playing next: ${playlist[nextIdx].title}`;
-                        } else if (subCmd === 'prev') {
-                            const prevIdx = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-                            playTrack(prevIdx);
-                            output = `Playing prev: ${playlist[prevIdx].title}`;
-                        } else if (subCmd === 'stop') {
-                            if(audio) audio.pause();
-                            if(player) player.classList.remove('playing');
-                            if(playIcon) playIcon.textContent = '▶';
-                            output = "Music stopped.";
                         } else {
-                            output = "Usage: music [list|play <index>|next|prev|stop]";
+                            output = "Music player not initialized.";
                         }
                         break;
                     case 'whoami':

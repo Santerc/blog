@@ -40,6 +40,34 @@
         }
     </style>
 
+    <!-- Global Playlist Data -->
+    <script>
+        window.sitePlaylist = [];
+        {{ $about := .Site.GetPage "about" }}
+        {{ if $about.Params.playlist }}
+            {{ range $about.Params.playlist }}
+            window.sitePlaylist.push({
+                title: "{{ .title }}",
+                artist: "{{ .artist }}",
+                cover: "{{ .cover }}",
+                theme: "{{ .theme }}",
+                url: "{{ if .url }}{{ .url | relURL }}{{ else }}https://music.163.com/song/media/outer/url?id={{ .id }}.mp3{{ end }}"
+            });
+            {{ end }}
+        {{ else }}
+            // Fallback if no playlist defined
+            window.sitePlaylist.push({
+                title: "Unknown",
+                artist: "Unknown",
+                cover: "",
+                url: ""
+            });
+        {{ end }}
+    </script>
+    
+    <!-- Global Music Player Logic -->
+    <script src="{{ "js/music-player.js" | relURL }}"></script>
+
     <!-- 调试脚本：检查 CSS 是否真的加载成功 -->
     {{/*  <script>
         window.addEventListener('load', function() {

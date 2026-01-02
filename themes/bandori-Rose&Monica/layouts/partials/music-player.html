@@ -1,0 +1,204 @@
+{{/* Global Music Player Partial */}}
+<div id="global-music-player" class="global-player mode-mini" style="display: none;">
+    <!-- Mini Mode UI (Header) -->
+    <div class="mini-ui">
+        <div class="mini-waveform">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+        <button id="mini-play-btn" class="mini-btn">▶</button>
+    </div>
+
+    <!-- Full Mode UI (About Page) -->
+    <div class="full-ui">
+        <div class="album-art">
+            <img id="global-cover" src="" alt="cover">
+            <div class="vinyl-center"></div>
+        </div>
+        
+        <div class="track-info">
+            <div id="global-title" class="track-title">Loading...</div>
+            <div id="global-artist" class="track-artist">...</div>
+            
+            <div class="waveform">
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            </div>
+        </div>
+
+        <div class="play-status">
+            <i class="fas fa-play" id="global-play-icon">▶</i>
+        </div>
+    </div>
+
+    <audio id="global-audio" loop></audio>
+</div>
+
+<style>
+    /* Global Player Container */
+    .global-player {
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 100;
+    }
+
+    /* --- Mini Mode Styles (Header) --- */
+    .global-player.mode-mini {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.05);
+        padding: 5px 10px;
+        border-radius: 20px;
+        margin-right: 10px;
+        height: 32px;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    [data-theme='dark'] .global-player.mode-mini {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .global-player.mode-mini .full-ui {
+        display: none;
+    }
+    
+    .global-player.mode-mini .mini-ui {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .mini-waveform {
+        display: flex;
+        align-items: flex-end;
+        gap: 2px;
+        height: 12px;
+    }
+    .mini-waveform .bar {
+        width: 2px;
+        background: var(--primary, #66ccff);
+        animation: wave 0.5s infinite alternate;
+        animation-play-state: paused;
+    }
+    .mini-waveform .bar:nth-child(1) { height: 60%; animation-duration: 0.5s; }
+    .mini-waveform .bar:nth-child(2) { height: 100%; animation-duration: 0.7s; }
+    .mini-waveform .bar:nth-child(3) { height: 50%; animation-duration: 0.6s; }
+    .mini-waveform .bar:nth-child(4) { height: 80%; animation-duration: 0.4s; }
+
+    .global-player.playing .mini-waveform .bar {
+        animation-play-state: running;
+    }
+
+    .mini-btn {
+        background: none;
+        border: none;
+        color: var(--primary, #66ccff);
+        cursor: pointer;
+        font-size: 0.8rem;
+        padding: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    /* --- Full Mode Styles (About Page) --- */
+    .global-player.mode-full {
+        /* Inherit styles from the original about page player */
+        padding: 15px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        cursor: pointer;
+        background: rgba(0,0,0,0.05); 
+        border: 1px solid rgba(0,0,0,0.05);
+        width: 100%; /* Fill container */
+        box-sizing: border-box;
+    }
+    [data-theme='dark'] .global-player.mode-full {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .global-player.mode-full .mini-ui {
+        display: none;
+    }
+    .global-player.mode-full .full-ui {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+    }
+
+    /* Re-use animations from abouts.html */
+    .global-player.mode-full .album-art {
+        width: 50px; height: 50px; 
+        background: #333; 
+        border-radius: 50%; 
+        position: relative; 
+        overflow: hidden; 
+        flex-shrink: 0; 
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .global-player.mode-full .album-art img {
+        width: 100%; height: 100%; 
+        object-fit: cover; 
+        opacity: 0.8;
+        animation: spin 10s linear infinite;
+        animation-play-state: paused;
+    }
+    .global-player.playing.mode-full .album-art img {
+        animation-play-state: running;
+    }
+    
+    .global-player.mode-full .vinyl-center {
+        position: absolute; top: 50%; left: 50%; 
+        transform: translate(-50%, -50%); 
+        width: 15px; height: 15px; 
+        background: #1a1a1a; 
+        border-radius: 50%; 
+        border: 2px solid rgba(255,255,255,0.1); 
+        z-index: 2;
+    }
+
+    .global-player.mode-full .track-info {
+        flex-grow: 1; min-width: 0;
+    }
+    .global-player.mode-full .track-title {
+        font-size: 0.9rem; font-weight: bold; margin-bottom: 3px; 
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .global-player.mode-full .track-artist {
+        font-size: 0.75rem; color: var(--text-muted); 
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .global-player.mode-full .waveform {
+        display: flex; align-items: flex-end; gap: 2px; height: 15px; margin-top: 5px;
+    }
+    .global-player.mode-full .waveform .bar {
+        width: 3px; background: var(--primary); 
+        animation: wave 0.5s infinite alternate;
+        animation-play-state: paused;
+    }
+    .global-player.playing.mode-full .waveform .bar {
+        animation-play-state: running;
+    }
+    /* Waveform bar heights */
+    .global-player.mode-full .waveform .bar:nth-child(1) { height: 60%; }
+    .global-player.mode-full .waveform .bar:nth-child(2) { height: 90%; animation-duration: 0.7s; }
+    .global-player.mode-full .waveform .bar:nth-child(3) { height: 40%; animation-duration: 0.6s; }
+    .global-player.mode-full .waveform .bar:nth-child(4) { height: 70%; animation-duration: 0.4s; }
+    .global-player.mode-full .waveform .bar:nth-child(5) { height: 50%; animation-duration: 0.8s; }
+
+    .global-player.mode-full .play-status {
+        font-size: 1.2rem; color: var(--primary);
+    }
+
+    /* Animation Keyframes (if not already defined globally) */
+    @keyframes wave {
+        0% { height: 20%; }
+        100% { height: 100%; }
+    }
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+</style>
