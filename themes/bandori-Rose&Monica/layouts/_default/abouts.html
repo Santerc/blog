@@ -38,14 +38,14 @@
                     <div id="custom-player" class="music-player" style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: all 0.3s ease;">
                         <!-- 封面/唱片 -->
                         <div class="album-art" style="width: 50px; height: 50px; background: #333; border-radius: 50%; position: relative; overflow: hidden; flex-shrink: 0; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
-                            <img src="{{ .Params.music_cover | default "https://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg" }}" alt="cover" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.8;">
+                            <img id="music-cover" src="" alt="cover" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.8;">
                             <div class="vinyl-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 15px; height: 15px; background: #1a1a1a; border-radius: 50%; border: 2px solid rgba(255,255,255,0.1); z-index: 2;"></div>
                         </div>
                         
                         <!-- 信息与波形 -->
                         <div class="track-info" style="flex-grow: 1; min-width: 0;">
-                            <div style="font-size: 0.9rem; font-weight: bold; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ .Params.music_title | default "The Rebel Path" }}</div>
-                            <div style="font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ .Params.music_artist | default "P.T. Adamczyk" }}</div>
+                            <div id="music-title" style="font-size: 0.9rem; font-weight: bold; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Loading...</div>
+                            <div id="music-artist" style="font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">...</div>
                             
                             <!-- 动态波形 -->
                             <div class="waveform" style="display: flex; align-items: flex-end; gap: 2px; height: 15px; margin-top: 5px;">
@@ -63,14 +63,8 @@
                         </div>
                     </div>
 
-                    <!-- 隐藏的 Audio 标签 -->
-                    <audio id="bgm-audio" loop>
-                        {{ if .Params.music_url }}
-                        <source src="{{ .Params.music_url | relURL }}">
-                        {{ else }}
-                        <source src="https://music.163.com/song/media/outer/url?id={{ .Params.music_id | default "1901371647" }}.mp3" type="audio/mpeg">
-                        {{ end }}
-                    </audio>
+                    <!-- 动态生成的 Audio 标签 -->
+                    <audio id="bgm-audio" loop></audio>
 
                     <!-- 系统状态模拟 -->
                     <div class="sys-stats" style="display: flex; flex-direction: column; gap: 10px; justify-content: center;">
@@ -203,45 +197,93 @@ document.addEventListener('DOMContentLoaded', function() {
     const player = document.getElementById('custom-player');
     const audio = document.getElementById('bgm-audio');
     const playIcon = document.getElementById('play-icon');
-    
+    const titleElem = document.getElementById('music-title');
+    const artistElem = document.getElementById('music-artist');
+    const coverElem = document.getElementById('music-cover');
+
+    // 1. Build Playlist
+    const playlist = [];
+    {{ if .Params.playlist }}
+        {{ range .Params.playlist }}
+        playlist.push({
+            title: "{{ .title }}",
+            artist: "{{ .artist }}",
+            cover: "{{ .cover }}",
+            theme: "{{ .theme }}",
+            url: "{{ if .url }}{{ .url | relURL }}{{ else }}https://music.163.com/song/media/outer/url?id={{ .id }}.mp3{{ end }}"
+        });
+        {{ end }}
+    {{ else }}
+        // Fallback
+        playlist.push({
+            title: "{{ .Params.music_title | default "Unknown" }}",
+            artist: "{{ .Params.music_artist | default "Unknown" }}",
+            cover: "{{ .Params.music_cover | default "" }}",
+            url: "{{ if .Params.music_url }}{{ .Params.music_url | relURL }}{{ else }}https://music.163.com/song/media/outer/url?id={{ .Params.music_id | default "1901371647" }}.mp3{{ end }}"
+        });
+    {{ end }}
+
+    let currentTrackIndex = 0;
+
+    function loadTrack(index) {
+        if (index < 0 || index >= playlist.length) return;
+        const track = playlist[index];
+        currentTrackIndex = index;
+        
+        if(titleElem) titleElem.textContent = track.title;
+        if(artistElem) artistElem.textContent = track.artist;
+        if(coverElem) coverElem.src = track.cover || "https://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg";
+        if(audio) audio.src = track.url;
+    }
+
+    function playTrack(index) {
+        loadTrack(index);
+        if(audio) {
+            audio.play().then(() => {
+                if(player) player.classList.add('playing');
+                if(playIcon) playIcon.textContent = '⏸';
+            }).catch(e => {
+                console.error("Play failed", e);
+                if(playIcon) playIcon.textContent = '✖';
+            });
+        }
+    }
+
+    // Initialize
+    if (playlist.length > 0) {
+        // Check theme
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        let defaultIndex = 0;
+        
+        // Find first matching theme
+        const themeMatchIndex = playlist.findIndex(t => t.theme === (isDark ? 'dark' : 'light'));
+        if (themeMatchIndex !== -1) {
+            defaultIndex = themeMatchIndex;
+        }
+        
+        loadTrack(defaultIndex);
+    }
+
+    // Player Click Event
     if(player && audio) {
         player.addEventListener('click', function() {
             if (audio.paused) {
-                var playPromise = audio.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        player.classList.add('playing');
-                        playIcon.textContent = '⏸'; // Pause icon
-                    })
-                    .catch(error => {
-                        console.error("Play error:", error);
-                        // 尝试判断是否是资源加载错误
-                        if(audio.error) {
-                            alert("音乐加载失败！\n原因：网易云版权限制（VIP歌曲无法外链播放）或链接失效。\n建议：更换非VIP歌曲ID，或在文章头配置 music_url 使用本地文件。");
-                            playIcon.textContent = '✖';
-                        } else {
-                            alert("播放失败，请查看控制台(F12)获取详细错误信息。");
-                        }
-                    });
-                }
+                audio.play().then(() => {
+                    player.classList.add('playing');
+                    playIcon.textContent = '⏸';
+                }).catch(e => console.error(e));
             } else {
                 audio.pause();
                 player.classList.remove('playing');
-                playIcon.textContent = '▶'; // Play icon
+                playIcon.textContent = '▶';
             }
         });
-
-        // Handle audio loading errors
-        audio.addEventListener('error', function(e) {
-            console.error("Audio resource error", e);
-            // 这里不弹窗，等到用户点击播放时再提示，以免打扰
-            playIcon.textContent = '✖';
-        }, true);
-
-        // Handle audio ending (though loop is on, just in case)
+        
         audio.addEventListener('ended', function() {
-            player.classList.remove('playing');
-            playIcon.textContent = '▶';
+             if(!audio.loop) {
+                player.classList.remove('playing');
+                playIcon.textContent = '▶';
+             }
         });
     }
 
@@ -312,9 +354,45 @@ document.addEventListener('DOMContentLoaded', function() {
   <span style="color: var(--primary)">help</span>      - Show this help message
   <span style="color: var(--primary)">whoami</span>    - Display user info
   <span style="color: var(--primary)">skills</span>    - List technical skills
+  <span style="color: var(--primary)">music</span>     - Control music player
   <span style="color: var(--primary)">contact</span>   - Show contact info
   <span style="color: var(--primary)">clear</span>     - Clear terminal
   <span style="color: var(--primary)">date</span>      - Show current date`;
+                        break;
+                    case 'music':
+                        const args = originalCommand.split(' ').slice(1);
+                        const subCmd = args[0];
+                        
+                        if (!subCmd || subCmd === 'list') {
+                            output = "Playlist:\n";
+                            playlist.forEach((track, i) => {
+                                const marker = (i === currentTrackIndex) ? "*" : " ";
+                                output += `${marker} [${i}] ${track.title} - ${track.artist}\n`;
+                            });
+                        } else if (subCmd === 'play') {
+                            const idx = parseInt(args[1]);
+                            if (!isNaN(idx) && idx >= 0 && idx < playlist.length) {
+                                playTrack(idx);
+                                output = `Playing: ${playlist[idx].title}`;
+                            } else {
+                                output = "Invalid track index.";
+                            }
+                        } else if (subCmd === 'next') {
+                            const nextIdx = (currentTrackIndex + 1) % playlist.length;
+                            playTrack(nextIdx);
+                            output = `Playing next: ${playlist[nextIdx].title}`;
+                        } else if (subCmd === 'prev') {
+                            const prevIdx = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+                            playTrack(prevIdx);
+                            output = `Playing prev: ${playlist[prevIdx].title}`;
+                        } else if (subCmd === 'stop') {
+                            if(audio) audio.pause();
+                            if(player) player.classList.remove('playing');
+                            if(playIcon) playIcon.textContent = '▶';
+                            output = "Music stopped.";
+                        } else {
+                            output = "Usage: music [list|play <index>|next|prev|stop]";
+                        }
                         break;
                     case 'whoami':
                         output = "User: {{ .Params.nickname }}\nRole: {{ .Params.role }}\nLocation: {{ .Params.location }}";
