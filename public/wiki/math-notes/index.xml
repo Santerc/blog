@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数学笔记 on SantercのBlog</title>
+    <link>http://localhost:1313/blog/wiki/math-notes/</link>
+    <description>Recent content in 数学笔记 on SantercのBlog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 02 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/blog/wiki/math-notes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>线性代数基础</title>
+      <link>http://localhost:1313/blog/wiki/math-notes/linear-algebra/</link>
+      <pubDate>Tue, 02 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/wiki/math-notes/linear-algebra/</guid>
+      <description>&lt;h2 id=&#34;向量空间&#34;&gt;向量空间&lt;/h2&gt;&#xA;&lt;p&gt;向量空间 $V$ 是一个集合&amp;hellip;&lt;/p&gt;&#xA;&lt;h2 id=&#34;特征值与特征向量&#34;&gt;特征值与特征向量&lt;/h2&gt;&#xA;&lt;p&gt;若 $Av = \lambda v$，则&amp;hellip;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

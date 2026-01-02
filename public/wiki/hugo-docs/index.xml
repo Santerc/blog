@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hugo 文档 on SantercのBlog</title>
+    <link>http://localhost:1313/blog/wiki/hugo-docs/</link>
+    <description>Recent content in Hugo 文档 on SantercのBlog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 02 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/blog/wiki/hugo-docs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>如何使用知识库</title>
+      <link>http://localhost:1313/blog/wiki/hugo-docs/usage/</link>
+      <pubDate>Tue, 02 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/wiki/hugo-docs/usage/</guid>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;知识库（Wiki）模块用于存放成体系的知识、笔记和文档。与博客文章不同，知识库的内容通常是长期维护、不断更新的。&lt;/p&gt;&#xA;&lt;h2 id=&#34;如何添加内容&#34;&gt;如何添加内容&lt;/h2&gt;&#xA;&lt;p&gt;在 &lt;code&gt;content/wiki/&lt;/code&gt; 目录下创建 Markdown 文件即可。&lt;/p&gt;&#xA;&lt;p&gt;例如：&lt;code&gt;content/wiki/my-note.md&lt;/code&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;目录结构建议&#34;&gt;目录结构建议&lt;/h2&gt;&#xA;&lt;p&gt;你可以通过创建子文件夹来组织内容，但请注意，目前的列表页只会显示一级子页面。如果需要更复杂的层级，可以在子文件夹中添加 &lt;code&gt;_index.md&lt;/code&gt;。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Hugo 基础</title>
+      <link>http://localhost:1313/blog/wiki/hugo-docs/basic/</link>
+      <pubDate>Tue, 02 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/wiki/hugo-docs/basic/</guid>
+      <description>&lt;h2 id=&#34;什么是-hugo&#34;&gt;什么是 Hugo&lt;/h2&gt;&#xA;&lt;p&gt;Hugo 是一个用 Go 语言编写的静态网站生成器。&lt;/p&gt;&#xA;&lt;h2 id=&#34;常用命令&#34;&gt;常用命令&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;hugo server&lt;/code&gt;: 启动本地服务器&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;hugo new posts/my-post.md&lt;/code&gt;: 创建新文章&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+  </channel>
+</rss>

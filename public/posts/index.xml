@@ -6,14 +6,21 @@
     <description>Recent content in Posts on SantercのBlog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 29 Dec 2025 17:16:56 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jan 2026 22:02:52 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>李雅普诺夫稳定性</title>
+      <link>http://localhost:1313/blog/posts/%E6%9D%8E%E9%9B%85%E6%99%AE%E8%AF%BA%E5%A4%AB%E7%A8%B3%E5%AE%9A%E6%80%A7/</link>
+      <pubDate>Thu, 01 Jan 2026 22:02:52 +0800</pubDate>
+      <guid>http://localhost:1313/blog/posts/%E6%9D%8E%E9%9B%85%E6%99%AE%E8%AF%BA%E5%A4%AB%E7%A8%B3%E5%AE%9A%E6%80%A7/</guid>
+      <description>&lt;h2 id=&#34;liyapunov关于稳定性的定义&#34;&gt;liyapunov关于稳定性的定义&lt;/h2&gt;&#xA;&lt;h3 id=&#34;数学基础&#34;&gt;数学基础&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;欧几里得范数：n维状态空间中，向量x的长度成为欧几里得范数，记为||x||，$||x||=sqrt(x1^2+x2^2+&amp;hellip;+xn^2)$&lt;/li&gt;&#xA;&lt;li&gt;向量间的距离：两个向量x和y的欧几里得距离为$||x-y||$&lt;/li&gt;&#xA;&lt;li&gt;球域$S(\delta)$:满足$||x||\leq\delta$的向量x构成的球形空间&lt;/li&gt;&#xA;&lt;li&gt;希尔维斯特判据&#xA;记$A=[a_{ij}]$，其中$a_{ij}$为$V(x_1,x_2,&amp;hellip;,x_n)=\sum_{i=1}^{n}\sum_{j=1}^{n}a_{ij}x_ix_j$中$x_i$和$x_j$前的系数正定则A的各阶顺序主子式都大于0。&lt;/li&gt;&#xA;&lt;li&gt;平衡点：对所有时间t，如果状态x满足$\dot{x}=0$，则称状态x为系统的平衡状态，又叫平衡点，记作$x_e$。需要强调的是，Lyapunov关于稳定性的研究均针对平衡状态而言。&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;总之，求平衡点步骤：令状态变量各分量倒数均为0&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;李氏稳定：对于系统$\dot{x}=f(x,t)$，若对任意$\epsilon&amp;gt;0$，存在$\delta&amp;gt;0$，使得对于任意初始状态$x_0$满足$||x-x_0||&amp;lt;\delta$时，系统方程的解$x(t,x_0,t_0)$在$t\rightarrow\infty$时，都位于以$x_e$为球心，任意规定的半径$\epsilon$的闭球域$S(\epsilon)$内，则称系统的平衡状态$x_e$在李雅普诺夫意义下稳定。&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
     <item>
       <title>Ttt</title>
       <link>http://localhost:1313/blog/posts/ttt/</link>
       <pubDate>Mon, 29 Dec 2025 17:16:56 +0800</pubDate>
       <guid>http://localhost:1313/blog/posts/ttt/</guid>
-      <description>&lt;h2 id=&#34;11&#34;&gt;1.1&lt;/h2&gt;&#xA;&lt;p&gt;Hello Hugo.&lt;/p&gt;&#xA;&lt;h2 id=&#34;21&#34;&gt;2.1&lt;/h2&gt;&#xA;&lt;p&gt;公式测试&lt;/p&gt;&#xA;&lt;p&gt;$$&#xA;\begin{aligned}&#xA;\sum_{i=1}^{n} i &amp;amp;= \frac{n(n+1)}{2}&#xA;\end{aligned}&#xA;$$&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;11&#34;&gt;1.1&lt;/h2&gt;&#xA;&lt;p&gt;Hello Hugo.&lt;/p&gt;&#xA;&lt;h2 id=&#34;21&#34;&gt;2.1&lt;/h2&gt;&#xA;&lt;p&gt;公式测试&lt;/p&gt;&#xA;&lt;p&gt;$$&#xA;\begin{aligned}&#xA;\sum_{i=1}^{n} i &amp;amp;= \frac{n(n+1)}{2}&#xA;\end{aligned}&#xA;$$&lt;/p&gt;&#xA;&lt;h2 id=&#34;31&#34;&gt;3.1&lt;/h2&gt;&#xA;&lt;p&gt;表格测试&lt;/p&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;列1&lt;/th&gt;&#xA;          &lt;th&gt;列2&lt;/th&gt;&#xA;          &lt;th&gt;列3&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;1&lt;/td&gt;&#xA;          &lt;td&gt;2&lt;/td&gt;&#xA;          &lt;td&gt;3&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;</description>
     </item>
     <item>
       <title>Hello World</title>

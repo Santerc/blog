@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head><script src="/blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=blog/livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>控制 | SantercのBlog</title>
+    
+    <script>
+        (function() {
+            
+            const savedTheme = localStorage.getItem('theme');
+            
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                
+                document.documentElement.removeAttribute('data-theme');
+            }
+        })();
+    </script>
+
+    
+    
+    
+        
+        <link rel="stylesheet" href="/blog/css/main.min.8f00a52c95683b8817c9fed655aa680ac6cbaaad3143158fe90b2b775e45b6c2.css" integrity="sha256-jwClLJVoO4gXyf7WVapoCsbLqq0xQxWP6Qsrd15FtsI=" id="main-css">
+        <script>console.log("CSS Mode: Assets Pipeline (Minified & Fingerprinted)", "\/blog\/css\/main.min.8f00a52c95683b8817c9fed655aa680ac6cbaaad3143158fe90b2b775e45b6c2.css");</script>
+    
+
+    <style>
+        html {
+            font-size: 80%;  
+        }
+    </style>
+
+    
+    
+    <script>
+        
+        const siteBaseURL = "http:\/\/localhost:1313\/blog\/";
+
+        
+        window.absURL = function(path) {
+            
+            if (path && (path.indexOf('http://') === 0 || path.indexOf('https://') === 0)) {
+                return path;
+            }
+            
+            
+            if (path && path.indexOf('/') === 0) {
+                path = path.substring(1);
+            }
+
+            return siteBaseURL + (path || "");
+        };
+        
+        
+        window.baseURL = siteBaseURL;
+    </script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+
+     
+
+</head>
+<body>
+    
+    <div id="mobile-backdrop"></div>
+    
+    <header class="site-header">
+    <div class="header-inner">
+        
+        <button id="mobile-menu-btn" class="mobile-toggle left" aria-label="Open Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+
+        
+        <a href="http://localhost:1313/blog/" class="logo">
+            SantercのBlog
+        </a>
+        
+        
+        <div class="header-right-group">
+            
+            <button id="theme-toggle" class="theme-switch" aria-label="Toggle Theme">
+                <div class="switch-track">
+                    <span class="icon-rose">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12,22c4.97,0,9-4.03,9-9c0-4.97-4.03-9-9-9c-4.97,0-9,4.03-9,9C3,17.97,7.03,22,12,22z M12,6 c3.31,0,6,2.69,6,6c0,3.31-2.69,6-6,6c-3.31,0-6-2.69-6-6C6,8.69,8.69,6,12,6z M11,8v3H8v2h3v3h2v-3h3v-2h-3V8H11z"/>
+                            <path d="M12 2C9 2 7 4 7 6C7 7.5 8 9 9.5 9.5C9 10 8.5 11 8.5 12C8.5 14 10 15 11 15.5C9 16.5 8 18 8 20C8 21.5 9 22 10 22C11.5 22 13 21 13.5 20C14.5 21 16 21.5 17 21.5C18.5 21.5 19.5 20.5 19.5 19C19.5 17.5 18.5 16 17 15.5C18 14.5 18.5 13 18.5 11.5C18.5 9.5 17 8 16 7.5C17 6.5 17.5 5 17.5 3.5C17.5 2 16 1.5 14.5 1.5C13.5 1.5 12.5 2 12 2Z" opacity="0.5"/>
+                        </svg>
+                    </span>
+                    <span class="icon-butterfly">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12,2c-5,0-9,3-9,8c0,4,3,7,5,7.8C7.4,18.5,7,19.2,7,20c0,1.1,0.9,2,2,2s2-0.9,2-2c0-0.6-0.3-1.2-0.8-1.6 c1.1-0.3,2-1,2.5-1.9c0.5,0.9,1.4,1.6,2.5,1.9C14.3,18.8,14,19.4,14,20c0,1.1,0.9,2,2,2s2-0.9,2-2c0-0.8-0.4-1.5-1-1.8 c2-0.8,5-3.8,5-7.8C21,5,17,2,12,2z M5,10c0-3.3,2.7-6,6-6s6,2.7,6,6s-2.7,6-6,6S5,13.3,5,10z"/>
+                            <path d="M12 3C7 3 4 6 4 9C4 11 5 12.5 6.5 13.5C5.5 14.5 5 16 5 17.5C5 19.5 6.5 21 8.5 21C10 21 11.5 20 12 19C12.5 20 14 21 15.5 21C17.5 21 19 19.5 19 17.5C19 16 18.5 14.5 17.5 13.5C19 12.5 20 11 20 9C20 6 17 3 12 3ZM8 19C7 19 6.5 18.5 6.5 17.5C6.5 16.5 7 15.5 8 15.5C9 15.5 9.5 16 10 16.5C10 17.5 9.5 18.5 9 19H8ZM16 19H15C14.5 18.5 14 17.5 14 16.5C14.5 16 15 15.5 16 15.5C17 15.5 17.5 16.5 17.5 17.5C17.5 18.5 17 19 16 19ZM8 13.5C7 12.5 6 11 6 9C6 7 8 5 10 5C11 5 11.5 5.5 12 6C12.5 5.5 13 5 14 5C16 5 18 7 18 9C18 11 17 12.5 16 13.5C15 12.5 14 11.5 12 11.5C10 11.5 9 12.5 8 13.5Z" opacity="0.5"/>
+                        </svg>
+                    </span>
+                    <span class="switch-thumb"></span>
+                </div>
+            </button>
+
+            
+            <button id="mobile-widget-btn" class="mobile-toggle right" aria-label="Open Widgets">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+            </button>
+        </div>
+    </div>
+</header>
+
+
+    
+    <div class="grid-container">
+        <aside class="sidebar-left">
+            
+<div class="search-widget" id="search-widget">
+    <div class="search-container">
+        
+        <span class="search-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+        </span>
+        
+        
+        
+        <input type="text" id="global-search-input" class="search-input" placeholder="CMD: ENTER_TO_SEARCH..." autocomplete="off">
+        
+    </div>
+    
+</div>
+
+
+
+
+<div class="widget">
+    <div class="widget-title">// USER_PROFILE</div>
+    <div style="text-align: center; margin-bottom: 1rem;">
+        
+        
+        <div style="
+            width: 100px; 
+            height: 100px; 
+            margin: 0 auto 15px; 
+            border-radius: 50%; 
+            border: 2px solid var(--primary); 
+            padding: 4px;
+            background: var(--bg-body);
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            overflow: hidden;
+        ">
+            
+                <img src="https://avatars.githubusercontent.com/u/131346045?v=4" alt="avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+            
+        </div>
+
+        
+        <h3 style="font-size: 1.2rem; color: var(--text-main); font-family: 'JetBrains Mono', monospace;">
+            Santerc
+        </h3>
+        
+        
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 5px;">
+            Thinking Doing To Theory
+        </p>
+    </div>
+</div>
+
+
+<div class="widget">
+    <div class="widget-title">// NAVIGATION</div>
+    <ul class="menu-list">
+        <li>
+            <a href="http://localhost:1313/blog/">
+                HOME <span>(00)</span>
+            </a>
+        </li>
+        <li>
+            <a href="http://localhost:1313/blog/posts/">
+                ARCHIVES <span>(01)</span>
+            </a>
+        </li>
+        <li>
+            <a href="http://localhost:1313/blog/tags/">
+                TAGS <span>(02)</span>
+            </a>
+        </li>
+        <li>
+            <a href="http://localhost:1313/blog/about/">
+                ABOUT <span>(03)</span>
+            </a>
+        </li>
+        <li>
+            <a href="http://localhost:1313/blog/tools/">
+                TOOLKIT <span>(04)</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+<script src="http://localhost:1313/blog/js/search.min.js"></script>
+
+        </aside>
+
+        <main class="main-content">
+            
+
+
+
+<div class="post-item" style="text-align: center; margin-bottom: 2rem;">
+    <h1 class="post-title" style="margin: 0;"># 控制</h1>
+</div>
+
+
+
+
+<article class="post-item">
+    <span class="post-meta">
+        2026-01-01
+         // [ 控制 理论 ] 
+    </span>
+    
+    <h2 class="post-title">
+        <a href="http://localhost:1313/blog/posts/%E6%9D%8E%E9%9B%85%E6%99%AE%E8%AF%BA%E5%A4%AB%E7%A8%B3%E5%AE%9A%E6%80%A7/">李雅普诺夫稳定性</a>
+    </h2>
+
+    
+    
+    <div style="margin-top: 1rem;">
+        <a href="http://localhost:1313/blog/posts/%E6%9D%8E%E9%9B%85%E6%99%AE%E8%AF%BA%E5%A4%AB%E7%A8%B3%E5%AE%9A%E6%80%A7/" style="font-family: 'JetBrains Mono'; font-size: 0.85rem;">
+            &gt; READ_LOG
+        </a>
+    </div>
+</article>
+
+
+
+
+
+
+        </main>
+
+        <aside class="sidebar-right">
+            
+
+    
+    <div class="widget">
+        <div class="widget-title">// HOT_TAGS</div>
+        <div class="tag-cloud">
+            
+            
+            <a href="http://localhost:1313/blog/tags/bit/" title="1 posts">
+                #BIT
+            </a>
+            
+            <a href="http://localhost:1313/blog/tags/%E6%8E%A7%E5%88%B6/" title="1 posts">
+                #控制
+            </a>
+            
+            <a href="http://localhost:1313/blog/tags/%E6%B5%8B%E8%AF%95/" title="1 posts">
+                #测试
+            </a>
+            
+            <a href="http://localhost:1313/blog/tags/%E7%90%86%E8%AE%BA/" title="1 posts">
+                #理论
+            </a>
+            
+        </div>
+    </div>
+
+
+
+<div class="widget">
+    <div class="widget-title">// DATABASE</div>
+    <ul class="menu-list">
+        
+        <li>
+            <a href="http://localhost:1313/blog/categories/log/">
+                LOG 
+                <span>[1]</span>
+            </a>
+        </li>
+        
+        <li>
+            <a href="http://localhost:1313/blog/categories/theory/">
+                THEORY 
+                <span>[1]</span>
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+<div class="widget">
+    <div class="widget-title">// LATEST_LOGS</div>
+    <ul class="recent-posts-list">
+        
+        <li>
+            <a href="http://localhost:1313/blog/posts/%E6%9D%8E%E9%9B%85%E6%99%AE%E8%AF%BA%E5%A4%AB%E7%A8%B3%E5%AE%9A%E6%80%A7/">李雅普诺夫稳定性</a>
+            <span class="date">01-01</span>
+        </li>
+        
+        <li>
+            <a href="http://localhost:1313/blog/posts/ttt/">Ttt</a>
+            <span class="date">12-29</span>
+        </li>
+        
+        <li>
+            <a href="http://localhost:1313/blog/posts/hello-world/">Hello World</a>
+            <span class="date">12-29</span>
+        </li>
+        
+    </ul>
+</div>
+
+        </aside>
+    </div>
+
+    
+    <footer class="site-footer">
+    <div class="footer-inner">
+        
+        
+        <div class="footer-left">
+            <div class="copyright">&copy; 2026 SANTERCのBLOG</div>
+            <div style="font-size: 0.75rem; opacity: 0.6;">DESIGNED BY SANTERC</div>
+        </div>
+
+        
+        <div class="footer-center">
+            <div class="status-line">
+                <span class="status-dot"></span> 
+                <span>SYSTEM ONLINE</span>
+            </div>
+        </div>
+
+        
+        <div class="footer-right">
+            
+            <a href="https://space.bilibili.com/543213068" target="_blank" class="social-btn" aria-label="Bilibili">
+                <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                    <path d="M488.6 104.1c16.7 18.1 24.4 39.7 23.1 64.9v239.5c-.6 25.2-9.6 46.7-27 64.6-17.4 17.9-39.6 27.2-66.5 27.8H93.8c-27-.6-49.2-9.9-66.5-27.8C9.9 455.2.9 433.7.3 408.5V169c.6-25.2 9.6-46.7 27-64.9 17.4-17.9 39.6-27.2 66.5-27.8h14.8l-32.9-32.9c-3.9-3.9-5.9-8.6-5.8-14 .1-5.4 2-10 5.7-13.8 3.8-3.7 8.5-5.7 14-5.8 5.5-.1 10.1 1.8 13.8 5.7l46.7 46.8h84.5l46.7-46.8c3.8-3.9 8.4-5.8 13.8-5.7 5.5.1 10.2 2 14 5.8 3.7 3.8 5.6 8.4 5.7 13.8.1 5.4-1.9 10.1-5.8 14l-32.9 32.9h14.8c26.9.6 49.1 9.9 66.5 27.8zm-364.5 119c-11.2.1-20.7 4-28.5 11.7-7.8 7.7-11.5 17.3-11.2 28.9.3 11.5 4.1 21.1 11.5 28.7 7.4 7.6 16.9 11.5 28.5 11.5 11.6-.1 21.2-4 28.8-11.7 7.6-7.7 11.3-17.3 11.2-28.7-.1-11.6-4-21.2-11.5-28.9-7.5-7.7-17-11.5-28.8-11.5zm170.8 0c-11.2.1-20.7 4-28.5 11.7-7.8 7.7-11.5 17.3-11.2 28.9.3 11.5 4.1 21.1 11.5 28.7 7.4 7.6 16.9 11.5 28.5 11.5 11.6-.1 21.2-4 28.8-11.7 7.6-7.7 11.3-17.3 11.2-28.7-.1-11.6-4-21.2-11.5-28.9-7.5-7.7-17-11.5-28.8-11.5z"/>
+                </svg>
+            </a>
+            
+            
+            
+            <a href="https://github.com/santerc" target="_blank" class="social-btn" aria-label="GitHub">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                </svg>
+            </a>
+            
+        </div>
+    </div>
+</footer>
+
+
+    
+
+    
+    
+
+    
+    <script src="http://localhost:1313/blog/js/main.min.js"></script>
+
+    
+    <script src="http://localhost:1313/blog/js/cursor.min.js"></script>
+    
+    
+    <script src="http://localhost:1313/blog/js/search.min.js"></script>
+</body>
+</html>

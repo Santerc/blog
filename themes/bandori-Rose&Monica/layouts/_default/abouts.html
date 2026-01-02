@@ -9,7 +9,9 @@
         </div>
         <div class="about-info">
             <h1 class="about-name" style="font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem;">{{ .Params.nickname }}</h1>
-            <p class="about-role" style="font-family: 'JetBrains Mono'; color: var(--primary); font-weight: bold;">// {{ .Params.role }}</p>
+            <p class="about-role" style="font-family: 'JetBrains Mono'; color: var(--primary); font-weight: bold; min-height: 1.5em;">
+                // <span id="typing-role">{{ .Params.role }}</span><span class="cursor-blink">_</span>
+            </p>
             <p class="about-loc" style="color: var(--text-muted);">📍 {{ .Params.location }}</p>
         </div>
     </div>
@@ -17,11 +19,75 @@
     <!-- 中间：两栏布局 -->
     <div class="about-grid" style="display: grid; grid-template-columns: 2fr 1.2fr; gap: 25px;">
         
-        <!-- 左侧：自我介绍正文 -->
-        <div class="about-bio glass-panel" style="padding: 2rem; border-radius: 12px;">
-            <div class="panel-title" style="font-family: 'JetBrains Mono'; font-weight: bold; color: var(--text-muted); margin-bottom: 1rem; border-bottom: 1px dashed var(--border); padding-bottom: 5px;">// BIO_DATA</div>
-            <div class="post-content">
-                {{ .Content }}
+        <!-- 左侧列 -->
+        <div class="about-left-col" style="display: flex; flex-direction: column; gap: 20px;">
+            <!-- 自我介绍正文 -->
+            <div class="about-bio glass-panel" style="padding: 2rem; border-radius: 12px;">
+                <div class="panel-title" style="font-family: 'JetBrains Mono'; font-weight: bold; color: var(--text-muted); margin-bottom: 1rem; border-bottom: 1px dashed var(--border); padding-bottom: 5px;">// BIO_DATA</div>
+                <div class="post-content">
+                    {{ .Content }}
+                </div>
+            </div>
+
+            <!-- 新增：状态监控面板 -->
+            <div class="glass-panel" style="padding: 1.5rem; border-radius: 12px; position: relative; overflow: hidden;">
+                <div class="panel-title" style="font-family: 'JetBrains Mono'; font-weight: bold; color: var(--text-muted); margin-bottom: 1rem; border-bottom: 1px dashed var(--border); padding-bottom: 5px;">// STATUS_MONITOR</div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <!-- 自定义网易云播放器 -->
+                    <div id="custom-player" class="music-player" style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: all 0.3s ease;">
+                        <!-- 封面/唱片 -->
+                        <div class="album-art" style="width: 50px; height: 50px; background: #333; border-radius: 50%; position: relative; overflow: hidden; flex-shrink: 0; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+                            <img src="{{ .Params.music_cover | default "https://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg" }}" alt="cover" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.8;">
+                            <div class="vinyl-center" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 15px; height: 15px; background: #1a1a1a; border-radius: 50%; border: 2px solid rgba(255,255,255,0.1); z-index: 2;"></div>
+                        </div>
+                        
+                        <!-- 信息与波形 -->
+                        <div class="track-info" style="flex-grow: 1; min-width: 0;">
+                            <div style="font-size: 0.9rem; font-weight: bold; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ .Params.music_title | default "The Rebel Path" }}</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ .Params.music_artist | default "P.T. Adamczyk" }}</div>
+                            
+                            <!-- 动态波形 -->
+                            <div class="waveform" style="display: flex; align-items: flex-end; gap: 2px; height: 15px; margin-top: 5px;">
+                                <div class="bar" style="width: 3px; height: 60%; background: var(--primary); animation: wave 0.5s infinite alternate;"></div>
+                                <div class="bar" style="width: 3px; height: 90%; background: var(--primary); animation: wave 0.7s infinite alternate;"></div>
+                                <div class="bar" style="width: 3px; height: 40%; background: var(--primary); animation: wave 0.6s infinite alternate;"></div>
+                                <div class="bar" style="width: 3px; height: 70%; background: var(--primary); animation: wave 0.4s infinite alternate;"></div>
+                                <div class="bar" style="width: 3px; height: 50%; background: var(--primary); animation: wave 0.8s infinite alternate;"></div>
+                            </div>
+                        </div>
+
+                        <!-- 播放状态图标 -->
+                        <div class="play-status" style="font-size: 1.2rem; color: var(--primary);">
+                            <i class="fas fa-play" id="play-icon">▶</i>
+                        </div>
+                    </div>
+
+                    <!-- 隐藏的 Audio 标签 -->
+                    <audio id="bgm-audio" loop>
+                        {{ if .Params.music_url }}
+                        <source src="{{ .Params.music_url | relURL }}">
+                        {{ else }}
+                        <source src="https://music.163.com/song/media/outer/url?id={{ .Params.music_id | default "1901371647" }}.mp3" type="audio/mpeg">
+                        {{ end }}
+                    </audio>
+
+                    <!-- 系统状态模拟 -->
+                    <div class="sys-stats" style="display: flex; flex-direction: column; gap: 10px; justify-content: center;">
+                        <div class="stat-row" style="display: flex; justify-content: space-between; font-size: 0.85rem; font-family: 'JetBrains Mono';">
+                            <span style="color: var(--text-muted);">MOOD</span>
+                            <span>☕ Caffeinated</span>
+                        </div>
+                        <div class="stat-row" style="display: flex; justify-content: space-between; font-size: 0.85rem; font-family: 'JetBrains Mono';">
+                            <span style="color: var(--text-muted);">STATUS</span>
+                            <span style="color: #98c379;">● Online</span>
+                        </div>
+                        <div class="stat-row" style="display: flex; justify-content: space-between; font-size: 0.85rem; font-family: 'JetBrains Mono';">
+                            <span style="color: var(--text-muted);">WEATHER</span>
+                            <span>🌤️ Sunny</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -60,5 +126,240 @@
             {{ end }}
         </div>
     </div>
+
+    <!-- 底部：交互式终端 (New) -->
+    <div class="terminal-section glass-panel" style="margin-top: 25px; padding: 0; border-radius: 12px; overflow: hidden; font-family: 'JetBrains Mono', monospace; border: 1px solid rgba(255,255,255,0.1);">
+        <div class="terminal-header" style="background: rgba(0,0,0,0.3); padding: 10px 15px; display: flex; gap: 8px; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56;"></div>
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e;"></div>
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f;"></div>
+            <div style="margin-left: 10px; font-size: 0.8rem; color: var(--text-muted);">guest@santerc-blog:~</div>
+        </div>
+        <div class="terminal-body" style="padding: 20px; min-height: 250px; background: rgba(0,0,0,0.2); color: #a9b7c6; font-size: 0.9rem;" id="terminal-output">
+            <div class="terminal-line">Welcome to Santerc's Interactive Terminal v1.0.0</div>
+            <div class="terminal-line">System initialized... OK</div>
+            <div class="terminal-line">Type <span style="color: var(--primary);">'help'</span> to see available commands.</div>
+            <br>
+            <div class="input-line" style="display: flex; gap: 10px; align-items: center;">
+                <span style="color: var(--primary);">➜</span>
+                <span style="color: #98c379;">~</span>
+                <input type="text" id="terminal-input" style="background: transparent; border: none; color: inherit; font-family: inherit; flex-grow: 1; outline: none;" autocomplete="off">
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    .cursor-blink {
+        animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+    @keyframes wave {
+        0% { height: 20%; }
+        100% { height: 100%; }
+    }
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    /* 默认暂停动画 */
+    .waveform .bar {
+        animation-play-state: paused;
+    }
+    .album-art img {
+        animation: spin 10s linear infinite;
+        animation-play-state: paused;
+    }
+
+    /* 播放时运行动画 */
+    .music-player.playing .waveform .bar {
+        animation-play-state: running;
+    }
+    .music-player.playing .album-art img {
+        animation-play-state: running;
+    }
+    .music-player:hover {
+        background: rgba(255,255,255,0.05) !important;
+    }
+
+    .terminal-line {
+        margin-bottom: 5px;
+        line-height: 1.5;
+    }
+    .command-output {
+        color: #e0e0e0;
+        margin-bottom: 10px;
+        white-space: pre-wrap;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // --- Music Player Logic ---
+    const player = document.getElementById('custom-player');
+    const audio = document.getElementById('bgm-audio');
+    const playIcon = document.getElementById('play-icon');
+    
+    if(player && audio) {
+        player.addEventListener('click', function() {
+            if (audio.paused) {
+                var playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        player.classList.add('playing');
+                        playIcon.textContent = '⏸'; // Pause icon
+                    })
+                    .catch(error => {
+                        console.error("Play error:", error);
+                        // 尝试判断是否是资源加载错误
+                        if(audio.error) {
+                            alert("音乐加载失败！\n原因：网易云版权限制（VIP歌曲无法外链播放）或链接失效。\n建议：更换非VIP歌曲ID，或在文章头配置 music_url 使用本地文件。");
+                            playIcon.textContent = '✖';
+                        } else {
+                            alert("播放失败，请查看控制台(F12)获取详细错误信息。");
+                        }
+                    });
+                }
+            } else {
+                audio.pause();
+                player.classList.remove('playing');
+                playIcon.textContent = '▶'; // Play icon
+            }
+        });
+
+        // Handle audio loading errors
+        audio.addEventListener('error', function(e) {
+            console.error("Audio resource error", e);
+            // 这里不弹窗，等到用户点击播放时再提示，以免打扰
+            playIcon.textContent = '✖';
+        }, true);
+
+        // Handle audio ending (though loop is on, just in case)
+        audio.addEventListener('ended', function() {
+            player.classList.remove('playing');
+            playIcon.textContent = '▶';
+        });
+    }
+
+    // --- Typing Effect ---
+    const roleElement = document.getElementById('typing-role');
+    const roles = ["{{ .Params.role }}", "Embedded Engineer", "Open Source Enthusiast", "Student"];
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typeSpeed = 100;
+
+    function typeRole() {
+        const currentRole = roles[roleIndex];
+        
+        if (isDeleting) {
+            roleElement.textContent = currentRole.substring(0, charIndex - 1);
+            charIndex--;
+            typeSpeed = 50;
+        } else {
+            roleElement.textContent = currentRole.substring(0, charIndex + 1);
+            charIndex++;
+            typeSpeed = 100;
+        }
+
+        if (!isDeleting && charIndex === currentRole.length) {
+            isDeleting = true;
+            typeSpeed = 2000; // Pause at end
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            roleIndex = (roleIndex + 1) % roles.length;
+            typeSpeed = 500; // Pause before typing next
+        }
+
+        setTimeout(typeRole, typeSpeed);
+    }
+    
+    // Start typing effect if element exists
+    if(roleElement) {
+        // Initialize with first role immediately
+        roleElement.textContent = roles[0];
+        charIndex = roles[0].length;
+        isDeleting = true;
+        setTimeout(typeRole, 2000);
+    }
+
+    // --- Terminal Logic ---
+    const terminalInput = document.getElementById('terminal-input');
+    const terminalOutput = document.getElementById('terminal-output');
+    const inputLine = document.querySelector('.input-line');
+
+    if (terminalInput) {
+        terminalInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value.trim().toLowerCase();
+                const originalCommand = this.value; // Keep case for display
+                
+                // Create command history line
+                const historyLine = document.createElement('div');
+                historyLine.className = 'terminal-line';
+                historyLine.innerHTML = `<span style="color: var(--primary);">➜</span> <span style="color: #98c379;">~</span> ${originalCommand}`;
+                terminalOutput.insertBefore(historyLine, inputLine);
+
+                // Process command
+                let output = '';
+                switch(command) {
+                    case 'help':
+                        output = `Available commands:
+  <span style="color: var(--primary)">help</span>      - Show this help message
+  <span style="color: var(--primary)">whoami</span>    - Display user info
+  <span style="color: var(--primary)">skills</span>    - List technical skills
+  <span style="color: var(--primary)">contact</span>   - Show contact info
+  <span style="color: var(--primary)">clear</span>     - Clear terminal
+  <span style="color: var(--primary)">date</span>      - Show current date`;
+                        break;
+                    case 'whoami':
+                        output = `User: {{ .Params.nickname }}\nRole: {{ .Params.role }}\nLocation: {{ .Params.location }}`;
+                        break;
+                    case 'skills':
+                        output = `Loaded Skills:\n{{ range .Params.skills }}  - {{ .name }} [{{ .percent }}%]\n{{ end }}`;
+                        break;
+                    case 'contact':
+                        output = `GitHub: https://github.com/{{ .Params.nickname }}\nEmail: (Hidden for privacy)`;
+                        break;
+                    case 'date':
+                        output = new Date().toString();
+                        break;
+                    case 'clear':
+                        // Remove all previous siblings of inputLine
+                        while(terminalOutput.firstChild && terminalOutput.firstChild !== inputLine) {
+                            terminalOutput.removeChild(terminalOutput.firstChild);
+                        }
+                        this.value = '';
+                        return; // Exit early
+                    case '':
+                        output = '';
+                        break;
+                    default:
+                        output = `Command not found: ${command}. Type 'help' for available commands.`;
+                }
+
+                if (output) {
+                    const outputDiv = document.createElement('div');
+                    outputDiv.className = 'command-output';
+                    outputDiv.innerHTML = output;
+                    terminalOutput.insertBefore(outputDiv, inputLine);
+                }
+
+                // Clear input and scroll to bottom
+                this.value = '';
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            }
+        });
+
+        // Focus input when clicking anywhere in terminal
+        document.querySelector('.terminal-section').addEventListener('click', function() {
+            terminalInput.focus();
+        });
+    }
+});
+</script>
 {{ end }}

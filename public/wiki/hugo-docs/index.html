@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head><script src="/blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=blog/livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hugo 文档 | SantercのBlog</title>
+    
+    <script>
+        (function() {
+            
+            const savedTheme = localStorage.getItem('theme');
+            
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                
+                document.documentElement.removeAttribute('data-theme');
+            }
+        })();
+    </script>
+
+    
+    
+    
+        
+        <link rel="stylesheet" href="/blog/css/main.min.2960634e6bcc5d9652667288cd12f5a47bb8a167bdeb421e859e9cafb05a1b2c.css" integrity="sha256-KWBjTmvMXZZSZnKIzRL1pHu4oWe960IehZ6cr7BaGyw=" id="main-css">
+        <script>console.log("CSS Mode: Assets Pipeline (Minified & Fingerprinted)", "\/blog\/css\/main.min.2960634e6bcc5d9652667288cd12f5a47bb8a167bdeb421e859e9cafb05a1b2c.css");</script>
+    
+
+    <style>
+        html {
+            font-size: 80%;  
+        }
+    </style>
+
+    
+    
+    <script>
+        
+        const siteBaseURL = "http:\/\/localhost:1313\/blog\/";
+
+        
+        window.absURL = function(path) {
+            
+            if (path && (path.indexOf('http://') === 0 || path.indexOf('https://') === 0)) {
+                return path;
+            }
+            
+            
+            if (path && path.indexOf('/') === 0) {
+                path = path.substring(1);
+            }
+
+            return siteBaseURL + (path || "");
+        };
+        
+        
+        window.baseURL = siteBaseURL;
+    </script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+
+     
+
+</head>
+<body>
+    
+    <div id="mobile-backdrop"></div>
+    
+    <header class="site-header">
+    <div class="header-inner">
+        
+        <button id="mobile-menu-btn" class="mobile-toggle left" aria-label="Open Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+
+        
+        <a href="http://localhost:1313/blog/" class="logo">
+            SantercのBlog
+        </a>
+        
+        
+        <div class="header-right-group">
+            
+            <button id="theme-toggle" class="theme-switch" aria-label="Toggle Theme">
+                <div class="switch-track">
+                    <span class="icon-rose">
+                        <img src="https://static.wikia.nocookie.net/bandori/images/d/de/Icon_roselia.svg" alt="Roselia" width="18" height="18">
+                    </span>
+                    <span class="icon-butterfly">
+                        <img src="https://static.wikia.nocookie.net/bandori/images/3/34/Icon_morfonica.svg" alt="Morfonica" width="18" height="18">
+                    </span>
+                    <span class="switch-thumb"></span>
+                </div>
+            </button>
+
+            
+            <button id="mobile-widget-btn" class="mobile-toggle right" aria-label="Open Widgets">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+            </button>
+        </div>
+    </div>
+</header>
+
+
+    
+    <div class="grid-container">
+        <aside class="sidebar-left">
+            
+<div class="search-widget" id="search-widget">
+    <div class="search-container">
+        
+        <span class="search-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+        </span>
+        
+        
+        
+        <input type="text" id="global-search-input" class="search-input" placeholder="CMD: ENTER_TO_SEARCH..." autocomplete="off">
+        
+    </div>
+    
+</div>
+
+
+
+
+<div class="widget">
+    <div class="widget-title">// USER_PROFILE</div>
+    <div style="text-align: center; margin-bottom: 1rem;">
+        
+        
+        <div style="
+            width: 100px; 
+            height: 100px; 
+            margin: 0 auto 15px; 
+            border-radius: 50%; 
+            border: 2px solid var(--primary); 
+            padding: 4px;
+            background: var(--bg-body);
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            overflow: hidden;
+        ">
+            
+                <img src="https://avatars.githubusercontent.com/u/131346045?v=4" alt="avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+            
+        </div>
+
+        
+        <h3 style="font-size: 1.2rem; color: var(--text-main); font-family: 'JetBrains Mono', monospace;">
+            Santerc
+        </h3>
+        
+        
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 5px;">
+            Thinking Doing To Theory
+        </p>
+    </div>
+</div>
+
+
+<div class="widget">
+    <div class="widget-title">// NAVIGATION</div>
+    <ul class="menu-list">
+        <li>
+            <a href="http://localhost:1313/blog/">
+                HOME <span>(00)</span>
+            </a>
+        </li>
+        <li>
+            <a href="http://localhost:1313/blog/posts/">
+                ARCHIVES <span>(01)</span>
+            </a>
+        </li>
+        <li>
+            <a href="http://localhost:1313/blog/wiki/">
+                WIKI <span>(02)</span>
+            </a>
+        </li>
+        <li>
+            <a href="http://localhost:1313/blog/tags/">
+                TAGS <span>(03)</span>
+            </a>
+        </li>
+        <li>
+            <a href="http://localhost:1313/blog/about/">
+                ABOUT <span>(04)</span>
+            </a>
+        </li>
+        <li>
+            <a href="http://localhost:1313/blog/tools/">
+                TOOLKIT <span>(05)</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+<script src="http://localhost:1313/blog/js/search.min.js"></script>
+
+        </aside>
+
+        <main class="main-content">
+            
+
+<div class="post-item" style="margin-bottom: 2rem;">
+    
+    <div style="font-family: 'JetBrains Mono'; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px;">
+        <a href="http://localhost:1313/blog/wiki/">WIKI</a> 
+         / HUGO 文档 
+    </div>
+
+    <h1 class="post-title" style="margin: 0;">
+        
+            📂 Hugo 文档
+        
+    </h1>
+    
+    <p style="color: var(--text-muted); margin-top: 10px;">
+        关于 Hugo 博客搭建与使用的相关记录
+    </p>
+</div>
+
+<div class="wiki-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+    
+    
+    
+
+    
+    <a href="http://localhost:1313/blog/wiki/hugo-docs/usage/" class="wiki-card" style="
+        display: block;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        padding: 1.5rem;
+        border-radius: 12px;
+        transition: transform 0.3s, border-color 0.3s;
+        color: var(--text-main);
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+    ">
+        
+        <div style="position: absolute; top: -10px; right: -10px; font-size: 4rem; opacity: 0.05; transform: rotate(15deg);">
+            📄
+        </div>
+
+        <h3 style="margin-bottom: 0.5rem; color: var(--primary); display: flex; align-items: center; gap: 8px;">
+            
+            如何使用知识库
+        </h3>
+        
+        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; font-family: 'JetBrains Mono';">
+            
+                2024-01-02
+            
+        </div>
+        
+        <p style="font-size: 0.9rem; line-height: 1.5; color: var(--text-muted);">
+            <h2 id="简介">简介</h2>
+<p>知识库（Wiki）模块用于存放成体系的知识、笔记和文档。与博客文章不同，知识库的内容通常是长期维护、不断更新的。 …</p>
+        </p>
+    </a>
+    
+    <a href="http://localhost:1313/blog/wiki/hugo-docs/basic/" class="wiki-card" style="
+        display: block;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        padding: 1.5rem;
+        border-radius: 12px;
+        transition: transform 0.3s, border-color 0.3s;
+        color: var(--text-main);
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+    ">
+        
+        <div style="position: absolute; top: -10px; right: -10px; font-size: 4rem; opacity: 0.05; transform: rotate(15deg);">
+            📄
+        </div>
+
+        <h3 style="margin-bottom: 0.5rem; color: var(--primary); display: flex; align-items: center; gap: 8px;">
+            
+            Hugo 基础
+        </h3>
+        
+        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; font-family: 'JetBrains Mono';">
+            
+                2024-01-02
+            
+        </div>
+        
+        <p style="font-size: 0.9rem; line-height: 1.5; color: var(--text-muted);">
+            <h2 id="什么是-hugo">什么是 Hugo</h2>
+<p>Hugo 是一个用 Go 语言编写的静态网站生成器。</p>
+<h2 id="常用命令">常用命令</h2>
+<ul>
+<li><code>hugo server</code>: 启动本地服 …</li></ul>
+        </p>
+    </a>
+    
+</div>
+
+<style>
+    .wiki-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary);
+        box-shadow: var(--shadow-glass);
+    }
+</style>
+
+
+        </main>
+
+        <aside class="sidebar-right">
+            
+
+    
+    
+    
+    <div class="widget">
+        <div class="widget-title">// HUGO 文档</div>
+        <ul class="menu-list" style="max-height: 60vh; overflow-y: auto;">
+            
+            
+            <li>
+                <a href="http://localhost:1313/blog/wiki/hugo-docs/usage/" class="" style="
+                    display: block; 
+                    padding: 6px 0; 
+                    font-size: 0.95rem;
+                    
+                ">
+                    如何使用知识库
+                </a>
+            </li>
+            
+            <li>
+                <a href="http://localhost:1313/blog/wiki/hugo-docs/basic/" class="" style="
+                    display: block; 
+                    padding: 6px 0; 
+                    font-size: 0.95rem;
+                    
+                ">
+                    Hugo 基础
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+
+    
+    
+
+    
+    
+    
+    <div class="widget">
+        <div class="widget-title">// DATABASE</div>
+        <ul class="menu-list">
+            
+            <li>
+                <a href="http://localhost:1313/blog/categories/log/">
+                    LOG 
+                    <span>[1]</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="http://localhost:1313/blog/categories/theory/">
+                    THEORY 
+                    <span>[1]</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+
+        </aside>
+    </div>
+
+    
+    <footer class="site-footer">
+    <div class="footer-inner">
+        
+        
+        <div class="footer-left">
+            <div class="copyright">&copy; 2026 SANTERCのBLOG</div>
+            <div style="font-size: 0.75rem; opacity: 0.6;">DESIGNED BY SANTERC</div>
+        </div>
+
+        
+        <div class="footer-center">
+            <div class="status-line">
+                <span class="status-dot"></span> 
+                <span>SYSTEM ONLINE</span>
+            </div>
+        </div>
+
+        
+        <div class="footer-right">
+            
+            <a href="https://space.bilibili.com/543213068" target="_blank" class="social-btn" aria-label="Bilibili">
+                <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                    <path d="M488.6 104.1c16.7 18.1 24.4 39.7 23.1 64.9v239.5c-.6 25.2-9.6 46.7-27 64.6-17.4 17.9-39.6 27.2-66.5 27.8H93.8c-27-.6-49.2-9.9-66.5-27.8C9.9 455.2.9 433.7.3 408.5V169c.6-25.2 9.6-46.7 27-64.9 17.4-17.9 39.6-27.2 66.5-27.8h14.8l-32.9-32.9c-3.9-3.9-5.9-8.6-5.8-14 .1-5.4 2-10 5.7-13.8 3.8-3.7 8.5-5.7 14-5.8 5.5-.1 10.1 1.8 13.8 5.7l46.7 46.8h84.5l46.7-46.8c3.8-3.9 8.4-5.8 13.8-5.7 5.5.1 10.2 2 14 5.8 3.7 3.8 5.6 8.4 5.7 13.8.1 5.4-1.9 10.1-5.8 14l-32.9 32.9h14.8c26.9.6 49.1 9.9 66.5 27.8zm-364.5 119c-11.2.1-20.7 4-28.5 11.7-7.8 7.7-11.5 17.3-11.2 28.9.3 11.5 4.1 21.1 11.5 28.7 7.4 7.6 16.9 11.5 28.5 11.5 11.6-.1 21.2-4 28.8-11.7 7.6-7.7 11.3-17.3 11.2-28.7-.1-11.6-4-21.2-11.5-28.9-7.5-7.7-17-11.5-28.8-11.5zm170.8 0c-11.2.1-20.7 4-28.5 11.7-7.8 7.7-11.5 17.3-11.2 28.9.3 11.5 4.1 21.1 11.5 28.7 7.4 7.6 16.9 11.5 28.5 11.5 11.6-.1 21.2-4 28.8-11.7 7.6-7.7 11.3-17.3 11.2-28.7-.1-11.6-4-21.2-11.5-28.9-7.5-7.7-17-11.5-28.8-11.5z"/>
+                </svg>
+            </a>
+            
+            
+            
+            <a href="https://github.com/santerc" target="_blank" class="social-btn" aria-label="GitHub">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                </svg>
+            </a>
+            
+        </div>
+    </div>
+</footer>
+
+
+    
+
+    
+    
+
+    
+    <script src="http://localhost:1313/blog/js/main.min.js"></script>
+
+    
+    <script src="http://localhost:1313/blog/js/cursor.min.js"></script>
+    
+    
+    <script src="http://localhost:1313/blog/js/search.min.js"></script>
+</body>
+</html>
