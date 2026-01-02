@@ -634,18 +634,19 @@ document.addEventListener('DOMContentLoaded', function() {
     if (terminalInput) {
         terminalInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
-                const command = this.value.trim().toLowerCase();
-                const originalCommand = this.value; 
+                const fullCommand = this.value.trim();
+                const parts = fullCommand.split(/\s+/);
+                const cmd = parts[0].toLowerCase();
                 
                 
                 const historyLine = document.createElement('div');
                 historyLine.className = 'terminal-line';
-                historyLine.innerHTML = `<span style="color: var(--primary);">➜</span> <span style="color: #98c379;">~</span> ${originalCommand}`;
+                historyLine.innerHTML = `<span style="color: var(--primary);">➜</span> <span style="color: #98c379;">~</span> ${fullCommand}`;
                 terminalOutput.insertBefore(historyLine, inputLine);
 
                 
                 let output = '';
-                switch(command) {
+                switch(cmd) {
                     case 'help':
                         output = `Available commands:
   <span style="color: var(--primary)">help</span>      - Show this help message
@@ -657,22 +658,21 @@ document.addEventListener('DOMContentLoaded', function() {
   <span style="color: var(--primary)">date</span>      - Show current date`;
                         break;
                     case 'music':
-                        const args = originalCommand.split(' ').slice(1);
-                        const subCmd = args[0];
+                        const subCmd = parts[1] ? parts[1].toLowerCase() : 'list';
                         
-                        if (!subCmd || subCmd === 'list') {
+                        if (subCmd === 'list') {
                             output = "Playlist:\n";
                             playlist.forEach((track, i) => {
                                 const marker = (i === currentTrackIndex) ? "*" : " ";
                                 output += `${marker} [${i}] ${track.title} - ${track.artist}\n`;
                             });
                         } else if (subCmd === 'play') {
-                            const idx = parseInt(args[1]);
+                            const idx = parseInt(parts[2]);
                             if (!isNaN(idx) && idx >= 0 && idx < playlist.length) {
                                 playTrack(idx);
                                 output = `Playing: ${playlist[idx].title}`;
                             } else {
-                                output = "Invalid track index.";
+                                output = "Invalid track index. Usage: music play <index>";
                             }
                         } else if (subCmd === 'next') {
                             const nextIdx = (currentTrackIndex + 1) % playlist.length;
@@ -721,7 +721,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         output = '';
                         break;
                     default:
-                        output = `Command not found: ${command}. Type 'help' for available commands.`;
+                        output = `Command not found: ${cmd}. Type 'help' for available commands.`;
                 }
 
                 if (output) {
